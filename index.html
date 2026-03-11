@@ -1,0 +1,2985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belong 🌏 — Know Before You Go</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   DESIGN DIRECTION: Warm Premium Academic
+   Like a top-tier study-abroad platform —
+   rich ivory, hand-drawn world map texture,
+   deep teal + saffron, editorial typography
+───────────────────────────────────────── */
+:root {
+  --ivory:   #FAF7F2;
+  --ivory2:  #F3EDE3;
+  --cream:   #EDE5D8;
+  --paper:   #FFFFFF;
+  --ink:     #1C1917;
+  --ink2:    #44403C;
+  --ink3:    #78716C;
+  --teal:    #0D6E6E;
+  --teal2:   #0A5353;
+  --teal-s:  rgba(13,110,110,0.08);
+  --saffron: #E07B39;
+  --saffron2:#C4612A;
+  --saffron-s: rgba(224,123,57,0.1);
+  --gold:    #D4A017;
+  --gold-s:  rgba(212,160,23,0.12);
+  --green:   #2D6A4F;
+  --green-s: #D8F3DC;
+  --warn:    #92400E;
+  --warn-s:  #FEF3C7;
+  --red:     #9B2335;
+  --red-s:   #FFEAEA;
+  --border:  #E2D9CE;
+  --shadow:  0 2px 16px rgba(28,25,23,0.07);
+  --shadow2: 0 8px 32px rgba(28,25,23,0.13);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── WORLD MAP BACKGROUND ── */
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* SVG world map silhouette — subtle ink wash */
+.bg-canvas svg {
+  position: absolute;
+  width: 110%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  opacity: 0.032;
+}
+
+/* Warm gradient overlays */
+.bg-canvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 20%, rgba(224,123,57,0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 85% 80%, rgba(13,110,110,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(212,160,23,0.06) 0%, transparent 70%);
+}
+
+/* Diagonal stripe texture */
+.bg-canvas::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(28,25,23,0.012) 40px,
+    rgba(28,25,23,0.012) 41px
+  );
+}
+
+/* Floating destination blobs */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+.blob-1 { width:420px;height:420px; top:-100px; right:-80px; background:rgba(13,110,110,0.09); }
+.blob-2 { width:320px;height:320px; bottom:-60px; left:-60px; background:rgba(224,123,57,0.10); }
+.blob-3 { width:240px;height:240px; top:40%; right:5%; background:rgba(212,160,23,0.08); }
+
+/* ── DECORATIVE STAMP CIRCLES ── */
+.stamp-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(13,110,110,0.15);
+  animation: spin-slow 30s linear infinite;
+}
+.stamp-ring-2 {
+  border-style: dotted;
+  border-color: rgba(224,123,57,0.12);
+  animation-direction: reverse;
+  animation-duration: 45s;
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 18px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 48px 0 52px;
+  position: relative;
+}
+
+/* Passport stamp decoration */
+
+
+
+.logo-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal);
+  color: white;
+  border-radius: 100px;
+  padding: 8px 20px;
+  margin-bottom: 26px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  box-shadow: 0 4px 16px rgba(13,110,110,0.3);
+}
+.logo-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse-green 2s infinite;
+}
+@keyframes pulse-green {
+  0%,100% { box-shadow: 0 0 0 0 rgba(92,255,193,0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(92,255,193,0); }
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 7vw, 52px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 18px;
+  letter-spacing: -0.5px;
+}
+h1 em {
+  font-style: italic;
+  color: var(--saffron);
+}
+h1 span {
+  display: block;
+  font-size: 0.65em;
+  font-weight: 300;
+  color: var(--ink3);
+  letter-spacing: 0.5px;
+  font-style: normal;
+}
+
+.subtitle {
+  color: var(--ink3);
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 420px;
+  margin: 0 auto 28px;
+}
+
+/* Header trust pills */
+.trust-row {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 8px;
+  margin-top: 0;
+}
+.trust-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px; font-weight: 600;
+  color: var(--ink2);
+  box-shadow: 0 1px 4px rgba(28,25,23,0.06);
+}
+.trust-pill .dot { width:8px;height:8px;border-radius:50%;background:var(--green); }
+
+/* ── PROGRESS ── */
+.progress-wrap { margin-bottom: 22px; }
+.progress-info {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 10px;
+}
+.progress-label {
+  font-size: 11px; color: var(--ink3);
+  font-weight: 700; letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.progress-count {
+  font-size: 13px; font-weight: 700;
+  color: var(--teal);
+  background: var(--teal-s);
+  padding: 4px 12px; border-radius: 20px;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--cream);
+  border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--saffron));
+  border-radius: 20px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── STEP DOTS ── */
+.step-dots {
+  display: flex; justify-content: center;
+  gap: 6px; margin-bottom: 22px;
+}
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.step-dot.done { background: var(--teal); border-color: var(--teal); }
+.step-dot.current { background: var(--saffron); border-color: var(--saffron); width: 24px; border-radius: 4px; }
+
+/* ── QUESTION CARD ── */
+.question-card {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 28px;
+  padding: 34px 28px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow2);
+  animation: cardIn 0.4s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Corner ornament */
+.question-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle at 100% 0%, var(--saffron-s) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+@keyframes cardIn {
+  from { opacity:0; transform: translateY(18px) scale(0.98); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+.q-number {
+  font-size: 10px; color: var(--saffron);
+  font-weight: 800; letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.q-number::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+.q-text {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.q-hint {
+  font-size: 13px;
+  color: var(--ink3);
+  margin-bottom: 26px;
+  line-height: 1.6;
+  padding: 10px 14px;
+  background: var(--ivory2);
+  border-radius: 12px;
+  border-left: 3px solid var(--teal);
+}
+
+/* ── OPTIONS ── */
+.options { display: flex; flex-direction: column; gap: 10px; }
+
+.option {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 18px;
+  background: var(--ivory);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+  -webkit-tap-highlight-color: transparent;
+  position: relative; overflow: hidden;
+}
+.option::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--teal-s), transparent);
+  opacity: 0; transition: opacity 0.2s;
+  border-radius: 14px;
+}
+.option:hover {
+  border-color: var(--teal);
+  background: var(--paper);
+  transform: translateX(4px);
+  box-shadow: -3px 0 0 var(--teal), var(--shadow);
+}
+.option:hover::before { opacity: 1; }
+
+.option.selected {
+  border-color: var(--teal);
+  background: var(--paper);
+  transform: translateX(4px);
+  box-shadow: -4px 0 0 var(--teal), var(--shadow2);
+}
+.option.selected::before { opacity: 1; }
+
+.option-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  background: var(--paper);
+}
+.option.selected .option-dot {
+  border-color: var(--teal);
+  background: var(--teal);
+}
+.option.selected .option-dot::after {
+  content: ''; width: 7px; height: 7px;
+  background: white; border-radius: 50%;
+}
+
+.option-text {
+  font-size: 14px; font-weight: 600;
+  flex: 1; line-height: 1.4;
+  color: var(--ink2);
+}
+.option.selected .option-text { color: var(--ink); }
+
+/* ── NAV BUTTONS ── */
+.nav-buttons { display: flex; gap: 12px; margin-top: 10px; }
+
+.btn-back {
+  flex: 0 0 auto; padding: 15px 22px;
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  color: var(--ink3);
+  font-size: 14px; font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--teal); color: var(--teal); }
+
+.btn-next {
+  flex: 1; padding: 15px 24px;
+  background: var(--teal);
+  border: none; border-radius: 16px;
+  color: white;
+  font-size: 15px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all 0.2s;
+  opacity: 0.35; pointer-events: none;
+  position: relative; overflow: hidden;
+  letter-spacing: 0.3px;
+}
+.btn-next::after {
+  content: '';
+  position: absolute; top:0; right:-60px;
+  width: 60px; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18));
+  transform: skewX(-15deg);
+}
+.btn-next.active { opacity: 1; pointer-events: all; }
+.btn-next.active:hover {
+  background: var(--teal2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,110,110,0.35);
+}
+
+/* ── LOADING ── */
+.loading { display: none; text-align: center; padding: 80px 20px; }
+.loading.show { display: block; }
+
+.loading-globe {
+  font-size: 56px; display: block;
+  animation: spin-globe 3s ease-in-out infinite;
+  margin-bottom: 24px;
+}
+@keyframes spin-globe {
+  0%,100% { transform: scale(1) rotate(-5deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+}
+.loading-dots {
+  display: flex; justify-content: center; gap: 6px; margin-bottom: 16px;
+}
+.loading-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--teal);
+  animation: dot-bounce 1.2s ease-in-out infinite;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; background: var(--saffron); }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; background: var(--gold); }
+@keyframes dot-bounce {
+  0%,80%,100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+.loading h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; color: var(--ink); margin-bottom: 6px;
+}
+.loading p { color: var(--ink3); font-size: 14px; }
+
+/* ── RESULTS ── */
+.results { display: none; animation: cardIn 0.4s ease; }
+.results.show { display: block; }
+
+.result-header { text-align: center; padding: 36px 0 40px; }
+.result-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 5vw, 34px);
+  font-weight: 900; margin: 14px 0 8px;
+  color: var(--ink);
+}
+.result-header p { color: var(--ink3); font-size: 14px; }
+
+/* ── PROFILE SUMMARY ── */
+.profile-summary {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.profile-summary::before {
+  content: '🎓';
+  position: absolute;
+  right: 20px; top: 14px;
+  font-size: 32px; opacity: 0.12;
+}
+.profile-item { display: flex; flex-direction: column; gap: 3px; }
+.profile-label {
+  font-size: 10px; color: var(--ink3); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.profile-value { font-size: 14px; font-weight: 700; color: var(--ink); }
+
+/* ── SCORECARD ── */
+.scorecard {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.scorecard-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 700;
+  margin-bottom: 20px; color: var(--ink);
+}
+.score-row {
+  display: flex; align-items: center;
+  gap: 12px; margin-bottom: 14px;
+}
+.score-flag { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; }
+.score-country-name { font-size: 13px; font-weight: 700; width: 80px; flex-shrink: 0; color: var(--ink2); }
+.score-bar-wrap {
+  flex: 1; height: 11px;
+  background: var(--ivory2);
+  border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.score-bar-fill { height: 100%; border-radius: 20px; transition: width 1.3s cubic-bezier(0.4,0,0.2,1); }
+.score-pct { font-size: 13px; font-weight: 800; width: 40px; text-align: right; flex-shrink: 0; }
+
+/* ── PIE ── */
+.pie-section {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 24px;
+  margin-bottom: 22px;
+  display: flex; align-items: center;
+  gap: 28px; flex-wrap: wrap;
+  box-shadow: var(--shadow);
+}
+.pie-wrap { position: relative; flex-shrink: 0; }
+.pie-center-label {
+  position: absolute; top:50%; left:50%;
+  transform: translate(-50%,-50%);
+  text-align: center; pointer-events: none;
+}
+.pie-center-flag { font-size: 24px; display: block; }
+.pie-center-text { font-size: 9px; color: var(--ink3); font-weight: 700; letter-spacing: 0.5px; }
+.pie-legend { flex: 1; min-width: 160px; }
+.pie-legend-title {
+  font-family: 'Fraunces', serif;
+  font-size: 14px; font-weight: 700;
+  margin-bottom: 14px; color: var(--ink);
+}
+.pie-legend-item { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.pie-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.pie-legend-text { font-size: 13px; font-weight: 600; color: var(--ink2); }
+.pie-legend-pct { font-size: 13px; color: var(--ink3); margin-left: auto; font-weight: 700; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; font-weight: 700;
+  margin-bottom: 16px; color: var(--ink);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1.5px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* ── COUNTRY CARDS ── */
+.country-card {
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 26px;
+  padding: 26px 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+.country-card:hover {
+  box-shadow: var(--shadow2);
+  transform: translateY(-3px);
+}
+
+/* Rank number watermark */
+.country-card::after {
+  content: attr(data-rank);
+  position: absolute;
+  bottom: 16px; right: 22px;
+  font-family: 'Fraunces', serif;
+  font-size: 64px; font-weight: 900;
+  color: var(--ink); opacity: 0.04;
+  line-height: 1; pointer-events: none;
+}
+
+.country-card.best {
+  border-color: rgba(45,106,79,0.35);
+  background: linear-gradient(145deg, rgba(45,106,79,0.03), var(--paper));
+}
+.country-card.best .country-name { color: var(--green); }
+.country-card.good { border-color: rgba(212,160,23,0.35); }
+.country-card.avoid { border-color: var(--border); opacity:0.85; }
+
+/* Top ribbon for best */
+.best-ribbon {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--saffron));
+  border-radius: 24px 24px 0 0;
+}
+
+.country-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px; gap: 12px;
+}
+.country-flag-name { display: flex; align-items: center; gap: 12px; }
+.flag { font-size: 32px; line-height: 1; }
+.country-rank {
+  font-size: 10px; font-weight: 700; color: var(--ink3);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.country-name {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 700; color: var(--ink);
+}
+
+.match-badge {
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  white-space: nowrap; flex-shrink: 0;
+  border: 1.5px solid;
+}
+.match-best { background: var(--green-s); color: var(--green); border-color: rgba(45,106,79,0.3); }
+.match-good { background: var(--gold-s); color: #78570A; border-color: rgba(212,160,23,0.3); }
+.match-low  { background: var(--ivory2); color: var(--ink3); border-color: var(--border); }
+
+/* ── COUNTRY STATS ── */
+.country-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 10px; margin-bottom: 18px;
+  padding: 16px 14px;
+  background: var(--ivory);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.stat { text-align: center; }
+.stat-value { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+.stat-label { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; }
+
+/* ── COUNTRY POINTS ── */
+.country-points {
+  list-style: none; display: flex;
+  flex-direction: column; gap: 7px;
+  margin-bottom: 16px;
+}
+.country-points li {
+  font-size: 13px; line-height: 1.55;
+  padding: 8px 12px 8px 36px;
+  border-radius: 10px; position: relative;
+}
+.country-points li::before {
+  position: absolute; left: 12px; top: 8px;
+  font-size: 13px; font-weight: 700;
+}
+.country-points li.good-point {
+  background: var(--green-s);
+  color: #1A4731;
+}
+.country-points li.good-point::before { content: '✓'; color: var(--green); }
+.country-points li.warning {
+  background: var(--warn-s);
+  color: var(--warn);
+}
+.country-points li.warning::before { content: '⚠'; color: #D97706; font-size: 11px; top: 9px; }
+.country-points li.danger {
+  background: var(--red-s);
+  color: var(--red);
+}
+.country-points li.danger::before { content: '!'; color: var(--red); font-weight: 900; font-size: 14px; top: 7px; }
+
+/* ── ACTION BOX ── */
+.action-box {
+  background: linear-gradient(135deg, var(--teal-s), transparent);
+  border: 1.5px solid rgba(13,110,110,0.2);
+  border-radius: 16px; padding: 16px 18px;
+  margin-bottom: 4px;
+}
+.action-box-title {
+  font-size: 10px; font-weight: 800; color: var(--teal);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+.action-box p { font-size: 13px; color: var(--ink2); line-height: 1.65; }
+
+/* ── CULTURE BOX ── */
+.culture-box {
+  background: linear-gradient(135deg, rgba(212,160,23,0.07), transparent);
+  border: 1.5px solid rgba(212,160,23,0.25);
+  border-radius: 16px; padding: 16px 18px;
+  margin-top: 14px;
+}
+.culture-title {
+  font-size: 10px; font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+.culture-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.culture-item {
+  font-size: 12px; color: var(--ink2);
+  line-height: 1.5; background: var(--paper);
+  padding: 9px 11px; border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.culture-item span {
+  font-weight: 700; color: var(--ink);
+  display: block; font-size: 10px;
+  margin-bottom: 2px; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--ink3);
+}
+
+/* ── WARNING BANNER ── */
+.warning-banner {
+  background: var(--warn-s);
+  border: 1.5px solid rgba(245,158,11,0.35);
+  border-radius: 18px; padding: 18px 20px;
+  margin-bottom: 22px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.warning-icon { font-size: 22px; flex-shrink: 0; }
+.warning-text { font-size: 13px; color: var(--warn); line-height: 1.65; }
+.warning-text strong { color: #78350F; }
+
+/* ── SHARE SECTION ── */
+.share-section {
+  background: var(--ink);
+  border-radius: 26px; padding: 32px 24px;
+  text-align: center; margin-top: 28px;
+  position: relative; overflow: hidden;
+}
+.share-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(13,110,110,0.3) 0%, transparent 60%),
+    radial-gradient(circle at 80% 50%, rgba(224,123,57,0.2) 0%, transparent 60%);
+}
+.share-section > * { position: relative; z-index: 1; }
+.share-section h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 900;
+  margin-bottom: 8px; color: white;
+}
+.share-section p { font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 22px; line-height: 1.6; }
+.share-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.share-btn {
+  padding: 12px 22px; border-radius: 14px;
+  font-size: 13px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.share-wa { background: #25D366; color: white; }
+.share-wa:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(37,211,102,0.4); }
+.share-tg { background: rgba(255,255,255,0.12); color: white; border: 1.5px solid rgba(255,255,255,0.25); }
+.share-tg:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.share-restart { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1.5px solid rgba(255,255,255,0.15); }
+.share-restart:hover { background: rgba(255,255,255,0.15); }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  margin-top: 16px; padding: 18px;
+  background: var(--paper);
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.disclaimer p { font-size: 12px; color: var(--ink3); line-height: 1.75; }
+.disclaimer strong { color: var(--ink2); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .country-stats { grid-template-columns: repeat(3,1fr); gap:6px; }
+  .stat-value { font-size: 12px; }
+  .profile-summary { grid-template-columns: 1fr 1fr; }
+  .pie-section { flex-direction: column; align-items: center; }
+  .culture-grid { grid-template-columns: 1fr; }
+  
+  h1 { font-size: 30px; }
+}
+
+/* ── CAPTURE GATE ── */
+.capture-gate {
+  display: none;
+  animation: cardIn 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.capture-gate.show { display: block; }
+
+.capture-card {
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 28px;
+  padding: 36px 28px;
+  box-shadow: var(--shadow2);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.capture-card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--teal), var(--saffron), var(--gold));
+}
+.capture-emoji {
+  font-size: 52px; display: block;
+  margin-bottom: 16px;
+  animation: float-slow 3s ease-in-out infinite;
+}
+@keyframes float-slow {
+  0%,100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+.capture-card h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.capture-card h2 em { font-style: italic; color: var(--saffron); }
+.capture-card .cap-sub {
+  font-size: 14px; color: var(--ink3);
+  line-height: 1.65; margin-bottom: 28px;
+  max-width: 380px; margin-left: auto; margin-right: auto;
+}
+.capture-fields { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.cap-field {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--ivory);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  transition: border-color 0.2s;
+}
+.cap-field:focus-within { border-color: var(--teal); background: var(--paper); }
+.cap-field-icon { font-size: 18px; flex-shrink: 0; }
+.cap-field input {
+  flex: 1; background: none; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--ink);
+}
+.cap-field input::placeholder { color: var(--ink3); font-weight: 400; }
+.cap-field-label {
+  font-size: 11px; font-weight: 700;
+  color: var(--ink3); text-transform: uppercase;
+  letter-spacing: 0.8px; flex-shrink: 0; width: 55px; text-align: right;
+}
+
+.btn-capture {
+  width: 100%; padding: 17px 24px;
+  background: var(--teal);
+  border: none; border-radius: 16px;
+  color: white; font-size: 16px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all 0.2s;
+  position: relative; overflow: hidden;
+  letter-spacing: 0.3px;
+}
+.btn-capture:hover {
+  background: var(--teal2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(13,110,110,0.35);
+}
+.btn-capture:disabled { opacity: 0.6; pointer-events: none; }
+.btn-skip {
+  margin-top: 14px;
+  background: none; border: none;
+  color: var(--ink3); font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; text-decoration: underline;
+  padding: 4px; transition: color 0.2s;
+}
+.btn-skip:hover { color: var(--ink); }
+
+.privacy-note {
+  margin-top: 16px;
+  font-size: 11px; color: var(--ink3);
+  display: flex; align-items: center;
+  justify-content: center; gap: 5px;
+}
+
+/* Soft capture (after results) */
+.soft-capture {
+  background: linear-gradient(135deg, var(--teal-s), var(--saffron-s));
+  border: 1.5px solid rgba(13,110,110,0.2);
+  border-radius: 22px;
+  padding: 24px 22px;
+  margin-top: 20px;
+  text-align: center;
+}
+.soft-capture h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--ink); margin-bottom: 6px;
+}
+.soft-capture p { font-size: 13px; color: var(--ink3); margin-bottom: 16px; line-height: 1.6; }
+.soft-capture-fields {
+  display: flex; gap: 10px;
+  flex-wrap: wrap; justify-content: center;
+  margin-bottom: 12px;
+}
+.soft-field {
+  flex: 1; min-width: 160px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 14px;
+  transition: border-color 0.2s;
+}
+.soft-field:focus-within { border-color: var(--teal); }
+.soft-field input {
+  flex: 1; background: none; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; color: var(--ink);
+}
+.soft-field input::placeholder { color: var(--ink3); }
+.btn-soft-capture {
+  width: 100%; padding: 13px 20px;
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  border: none; border-radius: 12px;
+  color: white; font-size: 14px; font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-soft-capture:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13,110,110,0.3); }
+.btn-soft-capture:disabled { opacity:0.6; pointer-events:none; }
+
+/* Save status toast */
+.save-toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink); color: white;
+  padding: 12px 24px; border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  z-index: 999; white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+}
+.save-toast.show { transform: translateX(-50%) translateY(0); }
+
+
+/* ── TABS RESULT SYSTEM ── */
+.profile-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 16px;
+}
+.pp-item {
+  display: flex; flex-direction: column;
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 14px;
+  min-width: 80px;
+  box-shadow: var(--shadow);
+}
+.pp-l { font-size: 9px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+.pp-v { font-size: 13px; font-weight: 700; color: var(--ink); }
+
+.intake-warn {
+  background: var(--warn-s); border: 1.5px solid rgba(245,158,11,0.3);
+  border-radius: 14px; padding: 13px 16px;
+  font-size: 13px; color: var(--warn);
+  margin-bottom: 16px; line-height: 1.6;
+}
+
+/* Dream banners */
+.dream-banner {
+  display: flex; gap: 14px; align-items: flex-start;
+  border-radius: 20px; padding: 18px 18px;
+  margin-bottom: 16px;
+}
+.dream-match { background: rgba(45,106,79,0.07); border: 2px solid rgba(45,106,79,0.25); }
+.dream-gap { background: rgba(224,123,57,0.07); border: 2px solid rgba(224,123,57,0.25); }
+.dream-warn { background: rgba(155,35,53,0.06); border: 2px solid rgba(155,35,53,0.2); }
+.dream-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+.dream-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.dream-sub { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+.dream-toggle {
+  margin-top: 10px; background: none;
+  border: 1.5px solid rgba(224,123,57,0.4);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 700; color: var(--saffron);
+  font-family: 'DM Sans', sans-serif; cursor: pointer;
+  transition: all 0.2s;
+}
+.dream-toggle:hover { background: var(--saffron-s); }
+.dream-gap-details { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.gap-item { display: flex; gap: 10px; background: var(--paper); border-radius: 12px; padding: 11px 13px; border: 1px solid var(--border); }
+.gap-icon { font-size: 18px; flex-shrink: 0; }
+.gap-area { font-size: 11px; font-weight: 800; color: var(--saffron); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+.gap-action { font-size: 12px; color: var(--ink2); line-height: 1.55; }
+.gap-timeline { font-size: 11px; color: var(--teal); font-weight: 700; margin-top: 4px; }
+
+/* Tab bar */
+.tab-bar {
+  display: flex; gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 4px; padding: 10px 14px;
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.22s cubic-bezier(0.4,0,0.2,1);
+  font-family: 'DM Sans', sans-serif;
+  min-width: 72px;
+}
+.tab-btn:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow); }
+.tab-btn.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(13,110,110,0.25);
+}
+.tab-flag { font-size: 22px; line-height: 1; }
+.tab-name { font-size: 11px; font-weight: 700; color: var(--ink3); }
+.tab-btn.active .tab-name { color: rgba(255,255,255,0.8); }
+.tab-pct { font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 10px; }
+.tab-btn.active .tab-pct { background: rgba(255,255,255,0.15) !important; color: white !important; }
+
+/* Tab panels */
+.tab-panel { display: none; animation: tabIn 0.3s cubic-bezier(0.4,0,0.2,1); }
+.tab-panel.active { display: block; }
+@keyframes tabIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* Country hero card */
+.country-hero {
+  background: var(--paper);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 22px 20px 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.hero-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.hero-left { display: flex; align-items: center; gap: 12px; }
+.hero-flag { font-size: 36px; line-height: 1; }
+.hero-rank { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+.hero-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 800; color: var(--ink); }
+.hero-score {
+  text-align: center; padding: 10px 16px;
+  border-radius: 14px; border: 2px solid;
+}
+.hero-score-num { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 900; line-height: 1; }
+.hero-score-label { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-bottom: 14px;
+  background: var(--ivory); border-radius: 14px;
+  padding: 12px 10px; border: 1px solid var(--border);
+}
+.hero-stat { text-align: center; }
+.hs-val { font-size: 13px; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+.hs-key { font-size: 9px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.3px; }
+
+.match-bar-wrap { height: 6px; background: var(--cream); border-radius: 20px; overflow: hidden; }
+.match-bar-fill { height: 100%; border-radius: 20px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+/* Points */
+.points-section { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+.point {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13px; line-height: 1.55;
+  padding: 9px 12px; border-radius: 11px;
+}
+.point span:first-child { font-weight: 800; flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+.point-good { background: var(--green-s); color: #1A4731; }
+.point-good span:first-child { color: var(--green); }
+.point-warn { background: var(--warn-s); color: #78350F; }
+.point-warn span:first-child { color: #D97706; }
+.point-bad { background: var(--red-s); color: var(--red); }
+.point-bad span:first-child { color: var(--red); }
+
+/* Collapsible sections */
+.collapsible { margin-bottom: 10px; }
+.collapsible-btn {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 13px 16px;
+  background: var(--ivory2); border: 1.5px solid var(--border);
+  border-radius: 14px; cursor: pointer;
+  font-size: 13px; font-weight: 700; color: var(--ink2);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.collapsible-btn:hover { background: var(--cream); border-color: var(--teal); color: var(--teal); }
+.collapsible-btn.open { background: var(--teal); border-color: var(--teal); color: white; border-radius: 14px 14px 0 0; }
+.chevron { font-size: 14px; transition: transform 0.2s; }
+.collapsible-body {
+  background: var(--paper); border: 1.5px solid var(--border);
+  border-top: none; border-radius: 0 0 14px 14px;
+  padding: 14px 16px; animation: tabIn 0.25s ease;
+}
+.action-item { font-size: 13px; color: var(--ink2); padding: 7px 0; border-bottom: 1px solid var(--border); line-height: 1.55; }
+.action-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* Culture grid new */
+.culture-grid-new { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.cg-item { background: var(--ivory); border-radius: 10px; padding: 9px 11px; border: 1px solid var(--border); }
+.cg-item-full { background: var(--ivory); border-radius: 10px; padding: 9px 11px; border: 1px solid var(--border); margin-bottom: 8px; }
+.cg-label { font-size: 9px; font-weight: 800; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+.cg-val { font-size: 12px; color: var(--ink2); line-height: 1.5; font-weight: 500; }
+.punjabi-tip {
+  background: linear-gradient(135deg, var(--saffron-s), transparent);
+  border: 1.5px solid rgba(224,123,57,0.25);
+  border-radius: 10px; padding: 10px 12px;
+  font-size: 13px; color: var(--ink2); line-height: 1.6;
+}
+
+/* Also analysed */
+.also-section {
+  background: var(--paper); border: 1.5px solid var(--border);
+  border-radius: 18px; padding: 18px 16px;
+  margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.also-title { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--ink3); margin-bottom: 12px; }
+.also-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.also-item:last-child { border-bottom: none; padding-bottom: 0; }
+.also-flag { font-size: 24px; }
+.also-info { flex: 1; }
+.also-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+.also-cost { font-size: 12px; color: var(--ink3); margin-top: 2px; }
+.also-pct { font-size: 16px; font-weight: 800; color: var(--ink3); }
+
+@media (max-width: 480px) {
+  .culture-grid-new { grid-template-columns: 1fr; }
+  .hero-name { font-size: 18px; }
+  .tab-btn { min-width: 62px; padding: 8px 10px; }
+}
+
+
+/* ── SMART TRANSITIONS ── */
+.transition-msg {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--teal-s), transparent);
+  border: 1.5px solid rgba(13,110,110,0.2);
+  border-radius: 12px; padding: 11px 14px;
+  margin-bottom: 18px;
+  animation: slideDown 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slideDown {
+  from { opacity:0; transform:translateY(-8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.tm-icon { font-size: 18px; flex-shrink: 0; }
+.tm-text { font-size: 13px; font-weight: 600; color: var(--teal2); line-height: 1.5; }
+
+
+/* ══════════════════════════════════
+   BELONG BRAND SYSTEM
+══════════════════════════════════ */
+
+/* Main logo — hero */
+.belong-logo {
+  display: inline-flex; align-items: baseline;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 24px rgba(13,110,110,0.15));
+}
+.belong-b {
+  font-family: 'Syne', sans-serif;
+  font-size: 58px; font-weight: 800;
+  color: var(--teal);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.belong-elong {
+  font-family: 'Syne', sans-serif;
+  font-size: 58px; font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.belong-dot {
+  font-family: 'Syne', sans-serif;
+  font-size: 58px; font-weight: 800;
+  color: var(--saffron);
+  line-height: 1;
+}
+
+/* Tagline */
+.belong-tagline {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 400;
+  font-style: italic;
+  color: var(--ink2);
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+.belong-sub {
+  font-size: 12px; font-weight: 600;
+  color: var(--ink3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* Small logo — results page */
+.belong-logo-sm {
+  display: inline-flex; align-items: baseline;
+  margin-bottom: 8px;
+}
+.belong-b-sm {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px; font-weight: 800;
+  color: var(--teal); line-height: 1;
+  letter-spacing: -1px;
+}
+.belong-elong-sm {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px; font-weight: 700;
+  color: var(--ink); line-height: 1;
+  letter-spacing: -1px;
+}
+.belong-dot-sm {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px; font-weight: 800;
+  color: var(--saffron); line-height: 1;
+}
+
+/* Result headline */
+.result-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px; font-weight: 800;
+  color: var(--ink); line-height: 1.15;
+  margin-bottom: 8px; letter-spacing: -0.5px;
+}
+.result-sub {
+  font-size: 12px; color: var(--ink3);
+  letter-spacing: 0.8px; text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Share headline */
+.share-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px; font-weight: 800;
+  color: var(--ink); line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+/* Footer best wishes line */
+.belong-footer-line {
+  text-align: center;
+  padding: 28px 20px;
+  background: linear-gradient(135deg, rgba(13,110,110,0.06), rgba(224,123,57,0.06));
+  border-radius: 24px;
+  border: 1.5px solid var(--border);
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 400;
+  font-style: italic;
+  color: var(--ink2); line-height: 1.8;
+  margin-bottom: 16px;
+}
+.belong-footer-brand {
+  display: inline-block; margin-top: 10px;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  font-style: normal;
+  background: linear-gradient(135deg, var(--teal), var(--saffron));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Question card — Belong badge */
+.q-number {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* Tab buttons — Syne font */
+.tab-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+}
+
+/* Hero trust pills — more stylish */
+.trust-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin-top: 4px;
+}
+.trust-pill {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px; font-weight: 700;
+  color: var(--ink2);
+  font-family: 'DM Sans', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.2s;
+}
+.trust-pill:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  transform: translateY(-1px);
+}
+
+/* Start button — bolder */
+.btn-start {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Capture gate — Belong styled */
+.cap-title {
+  font-family: 'Syne', sans-serif !important;
+}
+
+/* Country hero name — Syne */
+.hero-name {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 800 !important;
+}
+
+@media (max-width: 480px) {
+  .belong-b, .belong-elong, .belong-dot { font-size: 46px; }
+  .result-headline { font-size: 24px; }
+  .blob { opacity: 0.5; }
+  .bg-canvas::before { opacity: 0.7; }
+}
+
+
+/* ── FEEDBACK WIDGET ── */
+.feedback-widget {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 22px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.feedback-title {
+  font-family: 'Fraunces', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--ink); margin-bottom: 4px;
+}
+.feedback-sub {
+  font-size: 13px; color: var(--ink3);
+  margin-bottom: 14px;
+}
+.feedback-ratings {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.feedback-btn {
+  padding: 9px 16px;
+  background: var(--ivory);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px; font-weight: 600;
+  color: var(--ink2);
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.feedback-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: var(--teal-s);
+}
+.feedback-btn.selected {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+
+/* ── STEPPING STONES ── */
+.stepping-stones {
+  margin: 12px 0;
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 14px;
+  border: 1px solid var(--border);
+}
+.ss-label {
+  font-size: 12px; font-weight: 700;
+  color: var(--saffron);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+.ss-item {
+  display: flex; gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.ss-item:last-child { margin-bottom: 0; }
+.ss-num {
+  width: 22px; height: 22px;
+  background: var(--saffron);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px; font-weight: 800;
+  display: flex; align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ss-content { flex: 1; }
+.ss-country {
+  font-size: 13px; font-weight: 700;
+  color: var(--ink); margin-bottom: 3px;
+}
+.ss-path {
+  font-size: 12px; color: var(--ink2);
+  line-height: 1.55;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ATMOSPHERIC BACKGROUND -->
+<div class="bg-canvas">
+  <!-- World map SVG silhouette -->
+  <svg viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#44403C" stroke-width="1">
+    <!-- Simplified continent outlines -->
+    <!-- North America -->
+    <path d="M200,180 Q240,160 280,175 Q320,170 350,190 Q370,210 360,250 Q380,270 370,300 Q350,330 320,340 Q300,360 280,350 Q250,360 230,340 Q200,320 195,290 Q180,270 185,240 Q190,210 200,180Z"/>
+    <path d="M170,280 Q185,290 180,310 Q160,330 150,360 Q140,380 155,400 Q145,420 130,410 Q115,390 120,360 Q125,330 145,310 Q155,295 170,280Z"/>
+    <!-- South America -->
+    <path d="M280,430 Q310,420 340,440 Q370,460 375,500 Q380,540 365,580 Q350,620 325,640 Q300,650 275,635 Q250,615 245,575 Q235,535 245,495 Q255,455 280,430Z"/>
+    <!-- Europe -->
+    <path d="M880,160 Q910,150 940,165 Q960,175 955,200 Q970,215 960,235 Q940,250 915,245 Q895,240 880,220 Q870,200 880,180 Q878,170 880,160Z"/>
+    <path d="M930,165 Q960,158 990,170 Q1010,185 1005,205 Q995,225 970,230 Q945,235 930,218 Q920,200 930,165Z"/>
+    <!-- Africa -->
+    <path d="M960,280 Q1000,265 1040,280 Q1075,300 1080,350 Q1090,400 1075,460 Q1060,520 1030,560 Q1000,590 965,585 Q930,578 910,545 Q890,510 890,460 Q888,400 905,350 Q920,305 960,280Z"/>
+    <!-- Asia -->
+    <path d="M1060,140 Q1120,120 1200,135 Q1280,155 1340,180 Q1390,210 1400,260 Q1415,310 1390,350 Q1360,390 1310,400 Q1260,410 1210,390 Q1160,370 1120,330 Q1080,290 1065,240 Q1050,195 1060,140Z"/>
+    <path d="M1200,380 Q1250,370 1290,390 Q1320,415 1315,450 Q1305,490 1270,510 Q1235,530 1200,510 Q1165,490 1160,455 Q1155,420 1185,400Z"/>
+    <!-- Australia -->
+    <path d="M1500,540 Q1560,520 1620,540 Q1670,565 1680,620 Q1690,680 1650,720 Q1610,755 1555,750 Q1495,742 1470,700 Q1448,660 1460,610 Q1470,565 1500,540Z"/>
+    <!-- Latitude lines -->
+    <line x1="0" y1="300" x2="2000" y2="300" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <line x1="0" y1="500" x2="2000" y2="500" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <line x1="0" y1="700" x2="2000" y2="700" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <!-- Longitude lines -->
+    <line x1="400" y1="0" x2="400" y2="1000" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <line x1="800" y1="0" x2="800" y2="1000" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <line x1="1200" y1="0" x2="1200" y2="1000" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <line x1="1600" y1="0" x2="1600" y2="1000" stroke-dasharray="8,12" stroke-width="0.5"/>
+    <!-- Destination dots -->
+    <circle cx="920" cy="175" r="6" fill="#44403C"/>
+    <circle cx="1320" cy="160" r="5" fill="#44403C"/>
+    <circle cx="1570" cy="620" r="6" fill="#44403C"/>
+    <circle cx="1030" cy="420" r="4" fill="#44403C"/>
+  </svg>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header" id="mainHeader">
+    <div class="belong-logo-sm"><span class="belong-b-sm">B</span><span class="belong-elong-sm">elong</span><span class="belong-dot-sm">.</span></div>
+    <h1>Your <em>Dream Country</em><span>to Study Abroad</span></h1>
+    <p class="subtitle">Tell us about yourself — we will find your best study abroad match in 2 minutes.</p>
+    <div class="trust-row">
+      <div class="trust-pill"><span class="dot"></span>Verified Data</div>
+      <div class="trust-pill"><span class="dot"></span>No Agent Bias</div>
+      <div class="trust-pill"><span class="dot"></span>No Commission</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizSection">
+    <div class="step-dots" id="stepDots"></div>
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-label">Your Profile</span>
+        <span class="progress-count" id="progressCount">1 of 8</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:12.5%"></div>
+      </div>
+    </div>
+    <div class="question-card" id="questionCard"></div>
+    <div class="nav-buttons">
+      <button class="btn-back" id="btnBack" onclick="prevQ()" style="display:none">← Back</button>
+      <button class="btn-next" id="btnNext" onclick="nextQ()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loadingSection">
+    <span class="loading-globe">🌍</span>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+    <h3>Finding your match...</h3>
+    <p>Analysing your profile against verified 2026 visa data</p>
+  </div>
+
+  <!-- CAPTURE GATE -->
+  <div class="capture-gate" id="captureGate">
+    <div class="capture-card">
+      <span class="capture-emoji">🎯</span>
+      <h2>Your Results Are <em>Ready!</em></h2>
+      <p class="cap-sub">Enter your name and WhatsApp number to see your personalised country matches — we'll also send you a free checklist for your top match.</p>
+      <div class="capture-fields">
+        <div class="cap-field">
+          <span class="cap-field-icon">👤</span>
+          <input type="text" id="capName" placeholder="Your full name" autocomplete="name"/>
+          <span class="cap-field-label">NAME</span>
+        </div>
+        <div class="cap-field">
+          <span class="cap-field-icon">📱</span>
+          <input type="tel" id="capPhone" placeholder="WhatsApp number (10 digits)" maxlength="10" autocomplete="tel"/>
+          <span class="cap-field-label">WHATSAPP</span>
+        </div>
+        <div class="cap-field">
+          <span class="cap-field-icon">🏠</span>
+          <input type="text" id="capCity" placeholder="Your city / district (e.g. Ludhiana)" autocomplete="address-level2"/>
+          <span class="cap-field-label">CITY</span>
+        </div>
+      </div>
+      <button class="btn-capture" onclick="submitCapture()">See My Country Match →</button>
+      <br/>
+      <button class="btn-skip" onclick="skipCapture()">Skip for now — just show results</button>
+      <p class="privacy-note">🔒 Your details are private. We never share or sell your data.</p>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="resultsSection"></div>
+
+  <!-- SAVE TOAST -->
+  <div class="save-toast" id="saveToast">✅ Saved!</div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    id: 'field',
+    number: 'QUESTION 1 OF 8',
+    text: 'What do you want to study abroad?',
+    hint: 'Your field of study is one of the biggest factors — different countries lead in different fields.',
+    options: [
+      { value: 'tech', text: '💻 Engineering / IT / Computer Science', tag: null },
+      { value: 'business', text: '📊 Business / MBA / Management', tag: null },
+      { value: 'health', text: '🏥 Healthcare / Nursing / Medicine', tag: null },
+      { value: 'science', text: '🔬 Pure Sciences / Research', tag: null },
+      { value: 'arts', text: '🎨 Arts / Humanities / Social Sciences', tag: null },
+      { value: 'hospitality', text: '🍽 Hospitality / Tourism / Hotel Management', tag: null },
+      { value: 'law', text: '⚖️ Law / Legal Studies', tag: null }
+    ]
+  },
+  {
+    id: 'goal',
+    number: 'QUESTION 2 OF 8',
+    text: 'What is your main goal after finishing your studies?',
+    hint: 'This single answer shapes which country makes the most sense for your future.',
+    options: [
+      { value: 'settle', text: '🌍 Settle permanently abroad — PR is the goal', tag: null },
+      { value: 'work_return', text: '💼 Work abroad 2–3 years, then return to India', tag: null },
+      { value: 'just_degree', text: '🎓 Get the degree and return to India', tag: null },
+      { value: 'unsure', text: '🤔 Not sure yet — show me all options', tag: null }
+    ]
+  },
+  {
+    id: 'education',
+    number: 'QUESTION 3 OF 8',
+    text: 'What is your current education level?',
+    hint: 'This determines which programs and universities you are eligible to apply for.',
+    options: [
+      { value: '12th', text: '📚 12th Pass / Intermediate', tag: null },
+      { value: 'grad_final', text: '🎓 Graduation — Final Year (appearing)', tag: null },
+      { value: 'grad_done', text: '✅ Graduation — Completed', tag: null },
+      { value: 'pg', text: '🏆 Post Graduation / Masters done', tag: null }
+    ]
+  },
+  {
+    id: 'marks',
+    number: 'QUESTION 4 OF 8',
+    text: 'What is your overall academic percentage?',
+    hint: 'Every range has strong options — answer honestly for the most accurate match.',
+    options: [
+      { value: 'top', text: '🌟 Above 75%', tag: null },
+      { value: 'high', text: '✅ 65% – 75%', tag: null },
+      { value: 'mid', text: '👍 55% – 65%', tag: null },
+      { value: 'low', text: '📚 Below 55%', tag: null }
+    ]
+  },
+  {
+    id: 'ielts',
+    number: 'QUESTION 5 OF 8',
+    text: 'What is your IELTS score?',
+    hint: 'Select the closest range. No IELTS yet? No problem — we will factor in preparation time.',
+    options: [
+      { value: 'excel', text: '🌟 Above 7.0 band', tag: null },
+      { value: 'great', text: '✅ 6.5 – 7.0 band', tag: null },
+      { value: 'good', text: '👍 6.0 – 6.5 band', tag: null },
+      { value: 'ok', text: '📚 5.5 – 6.0 band', tag: null },
+      { value: 'low', text: '⚠️ Below 5.5 band', tag: null },
+      { value: 'none', text: '📝 Not given IELTS yet', tag: null }
+    ]
+  },
+  {
+    id: 'budget',
+    number: 'QUESTION 6 OF 8',
+    text: 'What is your total family budget for the full course?',
+    hint: 'Include tuition + living + travel. Approximate ranges — actual costs vary. Education loans and scholarships can significantly change this.',
+    options: [
+      { value: 'vlow', text: '💰 Below ₹15 lakh', tag: null },
+      { value: 'low', text: '💰 ₹15 lakh – ₹25 lakh', tag: null },
+      { value: 'mid', text: '💰 ₹25 lakh – ₹40 lakh', tag: null },
+      { value: 'high', text: '💰 ₹40 lakh – ₹60 lakh', tag: null },
+      { value: 'vhigh', text: '💰 Above ₹60 lakh', tag: null },
+      { value: 'scholarship', text: '🏆 I have or am applying for a scholarship', tag: null }
+    ]
+  },
+  {
+    id: 'intake',
+    number: 'QUESTION 7 OF 8',
+    text: 'When are you planning to start?',
+    hint: 'Be realistic — application deadlines are often missed. We will show you what is still achievable.',
+    options: [
+      { value: 'asap', text: '🚀 As soon as possible (within 6 months)', tag: null },
+      { value: 'sep26', text: '📅 September 2026', tag: null },
+      { value: 'jan27', text: '📅 January / February 2027', tag: null },
+      { value: 'sep27', text: '📅 September 2027 or later', tag: null }
+    ]
+  },
+  {
+    id: 'dream',
+    number: 'QUESTION 8 OF 8',
+    text: 'Last question — do you have a dream country in mind?',
+    hint: 'Tell us your heart. If your dream does not match your top result today — we will show you exactly how to get there.',
+    options: [
+      { value: 'none', text: '🤷 No preference — show me the best match', tag: null },
+      { value: 'germany', text: '🇩🇪 Germany', tag: null },
+      { value: 'ireland', text: '🇮🇪 Ireland', tag: null },
+      { value: 'uk', text: '🇬🇧 United Kingdom', tag: null },
+      { value: 'australia', text: '🇦🇺 Australia', tag: null },
+      { value: 'usa', text: '🇺🇸 USA / America', tag: null },
+      { value: 'newzealand', text: '🇳🇿 New Zealand', tag: null },
+      { value: 'canada', text: '🇨🇦 Canada', tag: null },
+      { value: 'other', text: '🌍 Other country — specify below', tag: null }
+    ],
+    extraInput: {
+      triggerValue: 'other',
+      id: 'dreamOtherInput',
+      placeholder: 'Which country? (e.g. France, Dubai, Singapore...)'
+    }
+  }
+];
+let current = 0;
+let answers = {};
+
+function buildDots() {
+  const dots = document.getElementById('stepDots');
+  // Only build dots for non-skipped questions
+  const visible = questions.filter(q => !shouldSkip(q.id));
+  dots.innerHTML = visible.map((_, i) => `<div class="step-dot" id="dot${i}"></div>`).join('');
+}
+
+function updateDots() {
+  questions.forEach((_, i) => {
+    const d = document.getElementById('dot' + i);
+    d.className = 'step-dot' + (i < current ? ' done' : i === current ? ' current' : '');
+  });
+}
+
+function getSmartContext() {
+  const a = answers;
+  const ctx = {};
+
+  // Greeting by name if captured
+  if (capturedLead && capturedLead.name) {
+    ctx.name = capturedLead.name.split(' ')[0];
+  }
+
+  // Smart hints based on previous answers
+  if (a.marks === 'low') ctx.marksNote = 'low';
+  if (a.marks === 'top') ctx.marksNote = 'top';
+  if (a.ielts === 'none') ctx.noIelts = true;
+  if (a.ielts === 'low') ctx.lowIelts = true;
+  if (a.budget === 'vlow') ctx.tightBudget = true;
+  if (a.goal === 'settle') ctx.prGoal = true;
+  if (a.goal === 'just_degree') ctx.degreeOnly = true;
+  if (a.field === 'tech') ctx.techField = true;
+  if (a.field === 'health') ctx.healthField = true;
+  if (a.dream) ctx.dream = a.dream;
+  return ctx;
+}
+
+function getDynamicHint(qId) {
+  const ctx = getSmartContext();
+  const a = answers;
+
+  const hints = {
+    marks: ctx.name
+      ? `Hi ${ctx.name}! Every percentage range opens different doors — answer honestly for the most accurate match.`
+      : 'Every percentage range has good options — answer honestly for the most accurate match.',
+
+    ielts: ctx.marksNote === 'low'
+      ? 'Your IELTS score can open doors that marks alone cannot — a strong IELTS (6.5+) significantly improves your options even with lower marks.'
+      : ctx.marksNote === 'top'
+      ? 'With your strong marks, a good IELTS score will give you access to top universities in multiple countries.'
+      : 'Select the closest range — this helps us match you to the right universities.',
+
+    field: ctx.noIelts
+      ? 'Your field of study matters a lot — some fields (like IT and nursing) are in high demand globally and can compensate for a lower IELTS.'
+      : ctx.lowIelts
+      ? 'Good news — some fields like Engineering and Healthcare have direct entry pathways even with lower IELTS in certain countries.'
+      : 'Different countries have very different strengths by field — this changes your recommendation significantly.',
+
+    budget: ctx.marksNote === 'low' && ctx.lowIelts
+      ? 'Germany has nearly free tuition — even a lower budget works well there. Be honest about your total budget including living costs.'
+      : ctx.prGoal
+      ? 'For a PR goal, budget is critical — countries with the best PR pathways (Australia, NZ) cost more upfront but pay off long term.'
+      : 'Include tuition + living + travel for the full course. There is a strong option for every budget range.',
+
+    goal: ctx.tightBudget
+      ? 'With a tighter budget, your goal shapes which country makes most sense — Germany is excellent for degree value, Ireland for work rights.'
+      : ctx.techField
+      ? 'As a tech student, your goal choice is crucial — USA and Ireland offer the best tech jobs, Australia the best PR path.'
+      : 'This single answer changes which country is your smartest choice — think carefully.',
+
+    intake: a.goal === 'settle'
+      ? 'Timeline matters for PR — starting earlier gives you more time to build work experience and meet residency requirements.'
+      : ctx.noIelts
+      ? 'Important — if you have not given IELTS yet, factor in 2–3 months for preparation and results before your target start date.'
+      : 'Application deadlines are often missed — this will tell you exactly what is still possible for you.',
+
+
+    dream: a.ielts === 'none' || a.ielts === 'low'
+      ? 'Tell us your dream — we will show you exactly what to improve to get there, even if your current profile is not there yet.'
+      : a.budget === 'vlow' || a.budget === 'low'
+      ? 'Some dream countries need higher budgets — but we will show you exactly the gap and how to bridge it with loans or scholarships.'
+      : 'Tell us your preference — we will show you if you are already on track or what needs work.'
+  };
+
+  return hints[qId] || questions[current].hint;
+}
+
+function getDynamicText(qId) {
+  const ctx = getSmartContext();
+  const a = answers;
+
+  // Personalised question text based on context
+  const texts = {
+    ielts: ctx.marksNote === 'low'
+      ? 'What is your IELTS score? (This is very important for your profile)'
+      : null,
+
+    budget: ctx.prGoal
+      ? 'What is your total family budget? (PR pathways need higher upfront investment)'
+      : ctx.degreeOnly
+      ? 'What is your total family budget? (Degree-only goal = Germany may be nearly free for you)'
+      : null,
+
+    goal: ctx.techField
+      ? 'What is your main goal? (As a tech student, this determines USA vs Ireland vs Australia)'
+      : ctx.healthField
+      ? 'What is your main goal? (Healthcare students have special PR pathways in Australia and NZ)'
+      : null,
+
+    dream: ctx.name
+      ? `Last question, ${ctx.name} — do you have a dream country in mind?`
+      : 'Last question — do you have a dream country in mind?'
+  };
+
+  return texts[qId] || null;
+}
+
+// Smart transition message between questions
+function getTransitionMsg(fromQId, val) {
+  const messages = {
+    marks: {
+      low:  { icon: '💪', text: 'No worries — we know countries and pathways that work for your profile.' },
+      mid:  { icon: '👍', text: 'Good — multiple strong options available for this range.' },
+      high: { icon: '✨', text: 'Strong profile — most countries will be open for you.' },
+      top:  { icon: '🌟', text: 'Excellent! Top universities across all countries are in reach.' }
+    },
+    ielts: {
+      none: { icon: '📝', text: 'No IELTS yet — we will factor in prep time in your recommendations.' },
+      low:  { icon: '📚', text: 'Below 5.5 — we will find you the best options and show you what to improve.' },
+      ok:   { icon: '👍', text: '5.5–6.0 — some strong options available. We will show you the full picture.' },
+      good: { icon: '✅', text: '6.0–6.5 — this opens most country options. Good score.' },
+      great:{ icon: '🌟', text: '6.5–7.0 — strong IELTS. Top universities are accessible.' },
+      excel:{ icon: '🔥', text: 'Above 7.0 — excellent. Every country is open to you.' }
+    },
+    budget: {
+      vlow: { icon: '🇩🇪', text: 'Low budget? Germany has nearly free tuition — this could be your best option.' },
+      low:  { icon: '🇩🇪', text: 'Germany and Ireland both work well in this range.' },
+      mid:  { icon: '🌍', text: 'Good budget — Germany, Ireland and parts of Australia open.' },
+      high: { icon: '✈️', text: 'Strong budget — most countries including UK are accessible.' },
+      vhigh:{ icon: '🌟', text: 'Excellent budget — all countries including USA fully open.' }
+    },
+    goal: {
+      settle:     { icon: '🏠', text: 'PR goal noted — Australia and New Zealand have the clearest pathways.' },
+      work_return:{ icon: '💼', text: 'Work then return — Ireland and UK offer the best post-study work rights.' },
+      just_degree:{ icon: '🎓', text: 'Degree only — Germany has near-free tuition, perfect for this goal.' },
+      unsure:     { icon: '🤔', text: 'That is fine — we will show you all your options clearly.' }
+    },
+    field: {
+      tech:       { icon: '💻', text: 'Tech/IT — Germany, Ireland and USA are your strongest destinations.' },
+      business:   { icon: '📊', text: 'Business — UK MBA has global value. Ireland has strong finance jobs.' },
+      health:     { icon: '🏥', text: 'Healthcare — Australia and NZ have critical shortages. Excellent PR pathways.' },
+      science:    { icon: '🔬', text: 'Research — Germany has world-class funded research programs.' },
+      arts:       { icon: '🎨', text: 'Arts/Humanities — UK and Ireland have strong programs in this field.' },
+      hospitality:{ icon: '🍽', text: 'Hospitality — NZ and Australia both have strong tourism industries.' }
+    }
+  };
+  return messages[fromQId]?.[val] || null;
+}
+
+let transitionMsg = null;
+
+function getVisibleTotal() {
+  return questions.filter((q,i) => {
+    // Simulate skipping based on current answers
+    return !shouldSkip(q.id);
+  }).length;
+}
+
+function getVisibleIndex() {
+  let count = 0;
+  for (let i = 0; i <= current; i++) {
+    if (!shouldSkip(questions[i].id)) count++;
+  }
+  return count;
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  const card = document.getElementById('questionCard');
+  const selected = answers[q.id];
+
+  // Get dynamic text and hint
+  const dynamicText = getDynamicText(q.id);
+  const dynamicHint = getDynamicHint(q.id);
+
+  // Transition message bar
+  const transBar = transitionMsg
+    ? `<div class="transition-msg"><span class="tm-icon">${transitionMsg.icon}</span><span class="tm-text">${transitionMsg.text}</span></div>`
+    : '';
+
+  card.innerHTML = `
+    ${transBar}
+    <div class="q-number">QUESTION ${getVisibleIndex()} OF ${getVisibleTotal()}</div>
+    <div class="q-text">${dynamicText || q.text}</div>
+    <div class="q-hint">${dynamicHint}</div>
+    <div class="options">
+      ${q.options.map(opt => `
+        <div class="option ${selected === opt.value ? 'selected' : ''}" onclick="selectOption('${q.id}','${opt.value}',this)">
+          <div class="option-dot"></div>
+          <div class="option-text">${opt.text}</div>
+          ${opt.tag ? `<span class="option-tag ${opt.tag.cls}">${opt.tag.text}</span>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  // Extra input field for "Other" option
+  const extraHtml = q.extraInput ? `
+    <div id="extraInputWrap" style="display:none;margin-top:10px;">
+      <div class="cap-field" style="border-radius:12px;">
+        <span class="cap-field-icon">✏️</span>
+        <input type="text" id="${q.extraInput.id}" placeholder="${q.extraInput.placeholder}"
+          style="flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);"
+          oninput="answers['dreamOtherText']=this.value"/>
+      </div>
+    </div>` : '';
+  card.innerHTML += extraHtml;
+
+  // Show/hide extra input based on selection
+  if (q.extraInput) {
+    card.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const wrap = document.getElementById('extraInputWrap');
+        if (wrap) wrap.style.display = answers[q.id] === q.extraInput.triggerValue ? 'block' : 'none';
+      });
+    });
+    // Show if already selected
+    if (answers[q.id] === q.extraInput.triggerValue) {
+      setTimeout(() => {
+        const wrap = document.getElementById('extraInputWrap');
+        if (wrap) wrap.style.display = 'block';
+      }, 50);
+    }
+  }
+
+  const visIdx = getVisibleIndex();
+  const visTotal = getVisibleTotal();
+  document.getElementById('progressCount').textContent = `${visIdx} of ${visTotal}`;
+  document.getElementById('progressFill').style.width = `${(visIdx / visTotal) * 100}%`;
+  document.getElementById('btnBack').style.display = current > 0 ? 'block' : 'none';
+  updateNextBtn();
+  updateDots();
+}
+
+function selectOption(qId, val, el) {
+  answers[qId] = val;
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  updateNextBtn();
+}
+
+function updateNextBtn() {
+  const q = questions[current];
+  const btn = document.getElementById('btnNext');
+  btn.className = 'btn-next' + (answers[q.id] ? ' active' : '');
+  btn.textContent = getNextIndex(current) === -1 ? 'Get My Results →' : 'Continue →';
+}
+
+// Smart skip rules — returns true if this question should be skipped
+function shouldSkip(qId) {
+  const a = answers;
+
+  return false;
+}
+
+function getNextIndex(from) {
+  let next = from + 1;
+  while (next < questions.length) {
+    if (!shouldSkip(questions[next].id)) return next;
+
+    next++;
+  }
+  return -1; // means go to results
+}
+
+function getPrevIndex(from) {
+  let prev = from - 1;
+  while (prev >= 0) {
+    if (!shouldSkip(questions[prev].id)) return prev;
+    prev--;
+  }
+  return 0;
+}
+
+
+
+
+
+function nextQ() {
+  const q = questions[current];
+  if (!answers[q.id]) return;
+  transitionMsg = getTransitionMsg(q.id, answers[q.id]);
+  const next = getNextIndex(current);
+  if (next === -1) {
+    showResults();
+  } else {
+    current = next;
+    renderQuestion();
+  }
+}
+
+function prevQ() {
+  const prev = getPrevIndex(current);
+  current = prev;
+  transitionMsg = null;
+  renderQuestion();
+}
+
+// ===== RESULTS ENGINE =====
+// ── GOOGLE SHEET WEBHOOK ──
+// TODO: Replace this URL with your own Google Apps Script Web App URL
+// Instructions below in the code
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw6yLYiYpU8z3JkQamCe8ceqUSx4B44H0NVMW_u_NSSApcGa85Y5xQc-_oYnUPjfqctXg/exec';
+
+let capturedLead = null;
+let calculatedResults = null;
+
+function showResults() {
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('loadingSection').classList.add('show');
+  document.getElementById('mainHeader').style.display = 'none';
+  document.querySelector('.bg-canvas') && (document.querySelector('.bg-canvas').style.opacity = '0.5');
+  setTimeout(() => {
+    document.getElementById('loadingSection').classList.remove('show');
+    calculatedResults = calculateResults();
+    // Show capture gate instead of results directly
+    document.getElementById('captureGate').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 2000);
+}
+
+function submitCapture() {
+  const name = document.getElementById('capName').value.trim();
+  const phone = document.getElementById('capPhone').value.trim();
+  const city = document.getElementById('capCity').value.trim();
+  if (!name) { document.getElementById('capName').focus(); return; }
+  if (!phone || phone.length < 10) { document.getElementById('capPhone').focus(); return; }
+  capturedLead = { name, phone, city };
+  saveToSheet(name, phone, city);
+  showFinalResults();
+}
+
+function skipCapture() {
+  capturedLead = null;
+  showFinalResults();
+}
+
+function showFinalResults() {
+  document.getElementById('captureGate').classList.remove('show');
+  renderResults(calculatedResults);
+  document.getElementById('resultsSection').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── SAVE TO GOOGLE SHEET ──
+function saveToSheet(name, phone, city, softCapture = false) {
+  if (!SHEET_URL || SHEET_URL === 'YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE') return;
+  const a = answers;
+  const topCountry = calculatedResults ? calculatedResults[0].country : 'Unknown';
+  const payload = {
+    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+    name: name || '',
+    phone: phone || '',
+    city: city || '',
+    education: a.education || '',
+    marks: a.marks || '',
+    ielts: a.ielts || '',
+    field: a.field || '',
+    budget: a.budget || '',
+    goal: a.goal || '',
+    intake: a.intake || '',
+    english: a.english || '',
+    top_country: topCountry,
+    source: softCapture ? 'soft_capture' : 'gate_capture',
+    dream_country: a.dream || '',
+    dream_other: answers['dreamOtherText'] || ''
+  };
+  // Use URL params method — works without CORS issues
+  const params = new URLSearchParams(payload);
+  fetch(SHEET_URL + '?' + params.toString(), {
+    method: 'GET',
+    mode: 'no-cors'
+  }).then(() => showToast('✅ Profile saved!')).catch(() => {});
+}
+
+function showToast(msg) {
+  const t = document.getElementById('saveToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function submitSoftCapture() {
+  const name = document.getElementById('softName').value.trim();
+  const phone = document.getElementById('softPhone').value.trim();
+  if (!name || !phone || phone.length < 10) return;
+  const btn = document.getElementById('btnSoftCapture');
+  btn.disabled = true;
+  btn.textContent = '✅ Checklist on its way!';
+  saveToSheet(name, phone, '', true);
+  // Open WhatsApp with personalised message
+  const topCountry = calculatedResults ? calculatedResults[0].country : 'your top match';
+  const msg = encodeURIComponent(
+    `Hi! I just used Belong and my top match is *${topCountry}*. Can you send me the free checklist? 🙏`
+  );
+  setTimeout(() => window.open('https://wa.me/?text=' + msg), 800);
+}
+
+function calculateResults() {
+  const a = answers;
+  const countries = [];
+
+  // ===== GERMANY =====
+  let de_score = 0;
+  let de_issues = [], de_pros = [], de_actions = [], de_warns = [];
+
+  // Budget check
+  if (['vlow','low'].includes(a.budget)) { de_score += 30; de_pros.push('Your budget fits Germany well — public university tuition is nearly free (€0–€500/semester)'); }
+  else if (a.budget === 'mid') { de_score += 25; de_pros.push('Budget is more than enough for Germany'); }
+  else { de_score += 20; de_pros.push('Budget comfortably covers Germany'); }
+
+  // Marks
+  if (a.marks === 'top') { de_score += 25; de_pros.push('Your marks qualify for top German universities'); }
+  else if (a.marks === 'high') { de_score += 22; de_pros.push('Your marks are competitive for most German universities'); }
+  else if (a.marks === 'mid') { de_score += 15; de_warns.push('55–65% marks: you qualify for many German universities but NOT TU9 top schools'); }
+  else { de_score += 5; de_issues.push('Below 55% marks makes German university admission very difficult'); }
+
+  // IELTS
+  if (['great','excel'].includes(a.ielts)) { de_score += 20; de_pros.push('IELTS score meets German university requirements comfortably'); }
+  else if (a.ielts === 'good') { de_score += 15; de_warns.push('6.0–6.5 IELTS: meets minimum but stronger score improves options'); }
+  else if (a.ielts === 'none') { de_score += 10; de_warns.push('No IELTS yet: Germany requires 6.5 minimum. Start preparation now'); de_actions.push('Book IELTS exam immediately — results take 2–3 weeks'); }
+  else if (a.ielts === 'ok') { de_score += 8; de_warns.push('5.5–6.0 IELTS: below Germany\'s 6.5 minimum for most programs'); }
+  else { de_score -= 10; de_issues.push('IELTS below 5.5 is too low for Germany — improvement required'); }
+
+  // Field
+  if (a.field === 'tech') { de_score += 15; de_pros.push('Engineering/IT: Germany is excellent — very high demand for tech graduates'); }
+  else if (a.field === 'science') { de_score += 12; de_pros.push('Research/Sciences: Germany has world-class research institutions'); }
+  else if (a.field === 'business') { de_score += 10; }
+  else if (a.field === 'health') { de_score += 5; de_warns.push('Healthcare: German nursing license requires additional German language qualification'); }
+  else if (a.field === 'hospitality') { de_score -= 5; de_warns.push('Hospitality: Germany is not the strongest destination for this field'); }
+
+  // Intake / Deadline
+  if (a.intake === 'sep26') { de_warns.push('⚠ September 2026: Most German university applications CLOSED (deadline was Nov–Jan). Target Winter 2026 / January 2027 instead'); de_score -= 10; }
+  else if (a.intake === 'asap') { de_warns.push('⚠ Urgent timeline: Germany APS verification takes 8–12 weeks — start immediately'); }
+  else if (a.intake === 'jan27') { de_pros.push('January 2027 intake: Good timeline — German winter semester applications open June–Sept'); de_score += 5; }
+  else if (a.intake === 'sep27') { de_pros.push('September 2027: Plenty of time to prepare strong application'); de_score += 10; }
+
+  // Goal
+  if (a.goal === 'just_degree') { de_score += 10; de_pros.push('Just want a degree: Germany\'s near-free tuition gives maximum value'); }
+  else if (a.goal === 'work_return') { de_score += 8; de_pros.push('Work then return: Germany offers 18-month job seeker visa after graduation'); }
+  else if (a.goal === 'settle') { de_score += 5; de_warns.push('PR goal: German PR takes 5+ years — possible but longer path than Australia'); }
+
+  // English comfort
+  if (a.english === 'no') { de_warns.push('Not comfortable in English: German-medium programs exist and are FREE — could actually be your best option'); de_score += 5; }
+
+  de_actions.push('Complete APS certificate verification (mandatory for Indian students) — apply 8–12 weeks before deadlines');
+  if (!de_actions.some(x => x.includes('IELTS'))) de_actions.push('Germany requires a blocked bank account (Sperrkonto) of €11,904 (≈₹10.5L) — confirmed 2026 official requirement');
+
+  countries.push({ country: 'Germany', flag: '🇩🇪', score: de_score, pros: de_pros, issues: de_issues, warns: de_warns, actions: de_actions, cost: '₹18–25L', tuition: 'Nearly Free', approval: 'Moderate', pr: '5+ years' });
+
+  // ===== IRELAND =====
+  let ie_score = 0;
+  let ie_issues = [], ie_pros = [], ie_actions = [], ie_warns = [];
+
+  if (['low','mid'].includes(a.budget)) { ie_score += 15; ie_warns.push('₹20–28L budget is tight for Ireland — manageable if part-time work is factored in'); }
+  else if (['high','vhigh'].includes(a.budget)) { ie_score += 25; ie_pros.push('Budget comfortably covers Ireland total costs'); }
+  else { ie_score += 18; ie_warns.push('Budget is on the edge for Ireland — plan part-time work from month 1'); }
+
+  if (['high','top'].includes(a.marks)) { ie_score += 22; ie_pros.push('Marks are competitive for Irish universities'); }
+  else if (a.marks === 'mid') { ie_score += 15; ie_warns.push('55–65% marks: accepted by many Irish colleges but not top universities like UCD or Trinity'); }
+  else { ie_score += 5; ie_issues.push('Below 55%: significantly limits Irish university choices'); }
+
+  if (['great','excel'].includes(a.ielts)) { ie_score += 20; ie_pros.push('IELTS score is strong for Ireland'); }
+  else if (a.ielts === 'good') { ie_score += 15; ie_pros.push('IELTS 6.0–6.5 meets most Irish college requirements'); }
+  else if (a.ielts === 'ok') { ie_score += 10; ie_warns.push('5.5–6.0 IELTS: meets minimum for some Irish colleges — not for top universities'); }
+  else if (a.ielts === 'none') { ie_score += 8; ie_warns.push('No IELTS yet: Ireland minimum is 6.0 — must appear before applying'); }
+  else { ie_score -= 5; ie_issues.push('IELTS below 5.5 does not meet Irish entry requirements'); }
+
+  if (a.field === 'tech') { ie_score += 18; ie_pros.push('IT/Tech: Ireland is home to Google, Apple, Meta European HQs — excellent job market'); }
+  else if (a.field === 'business') { ie_score += 15; ie_pros.push('Business: Dublin is a major European finance hub — strong graduate job market'); }
+  else if (a.field === 'health') { ie_score += 10; ie_pros.push('Healthcare: Ireland has growing demand for nurses — clear registration pathway'); }
+  else if (a.field === 'hospitality') { ie_score += 12; ie_pros.push('Hospitality: Irish tourism industry is strong with good job opportunities'); }
+
+  if (a.english === 'full') { ie_score += 15; ie_pros.push('English medium: Ireland is fully English-speaking — no language barrier'); }
+  else if (a.english === 'partial') { ie_score += 8; ie_warns.push('English medium is the only option in Ireland — language improvement important'); }
+  else { ie_score -= 5; ie_issues.push('Ireland is English-only — not suitable if you need non-English medium instruction'); }
+
+  if (a.intake === 'sep26') { ie_pros.push('September 2026 intake: Still possible if you apply immediately — Irish deadlines are April–May'); ie_score += 8; }
+  else if (a.intake === 'jan27') { ie_warns.push('January 2027: Ireland has fewer January intake options — confirm with specific colleges'); }
+  else if (a.intake === 'sep27') { ie_score += 8; ie_pros.push('Plenty of preparation time for September 2027'); }
+
+  if (a.goal === 'settle') { ie_score += 10; ie_pros.push('PR goal: Ireland offers a clear pathway to permanent residency after 5 years'); }
+  else if (a.goal === 'work_return') { ie_score += 12; ie_pros.push('Post-study work: Ireland offers 2-year stay-back visa for graduates to work'); }
+
+  ie_actions.push('Apply directly to Irish universities — no entrance exam required (unlike UK)');
+  ie_actions.push('Ireland requires €10,000 (≈₹9.3L) in bank for 1-year living costs — official ISD requirement from June 2025. Plus full first-year tuition proof.');
+
+  countries.push({ country: 'Ireland', flag: '🇮🇪', score: ie_score, pros: ie_pros, issues: ie_issues, warns: ie_warns, actions: ie_actions, cost: '₹22–30L', tuition: '₹8–15L/yr', approval: 'Good', pr: '5 years' });
+
+  // ===== UK =====
+  let uk_score = 0;
+  let uk_issues = [], uk_pros = [], uk_actions = [], uk_warns = [];
+
+  if (a.budget === 'vlow') { uk_score -= 20; uk_issues.push('Budget below ₹15L is far too low for UK — minimum realistic is ₹35L+ total'); }
+  else if (a.budget === 'low') { uk_score -= 15; uk_issues.push('₹15–25L budget cannot cover UK costs of ₹35–50L — high visa rejection risk without sufficient funds'); }
+  else if (a.budget === 'mid') { uk_score += 5; uk_warns.push('₹25–40L is below typical UK total costs of ₹35–50L — need loan or scholarship'); }
+  else if (a.budget === 'high') { uk_score += 20; uk_pros.push('Budget comfortably meets UK financial requirements'); }
+  else { uk_score += 25; uk_pros.push('Budget is strong for UK — all university options open'); }
+
+  if (a.marks === 'top') { uk_score += 25; uk_pros.push('Excellent marks open Russell Group university doors'); }
+  else if (a.marks === 'high') { uk_score += 18; uk_pros.push('Strong marks — good university tier accessible'); }
+  else if (a.marks === 'mid') { uk_score += 10; uk_warns.push('55–65% marks: limited to mid-tier UK universities, not top institutions'); }
+  else { uk_score -= 5; uk_issues.push('Below 55%: significantly limits UK options and increases visa risk'); }
+
+  if (['great','excel'].includes(a.ielts)) { uk_score += 20; uk_pros.push('IELTS meets top UK university requirements'); }
+  else if (a.ielts === 'good') { uk_score += 15; uk_warns.push('6.0–6.5 IELTS: sufficient for mid-tier UK universities, not for top 20'); }
+  else if (['ok','none'].includes(a.ielts)) { uk_score += 5; uk_warns.push('IELTS needs improvement — UK top universities require 6.5–7.0 minimum'); }
+  else { uk_score -= 10; uk_issues.push('IELTS below 5.5: does not meet UK visa requirements'); }
+
+  if (a.goal === 'work_return') { uk_score += 15; uk_pros.push('Post-study work: UK Graduate visa allows 2 years unrestricted work (3 for PhD)'); }
+  else if (a.goal === 'settle') { uk_score += 5; uk_warns.push('UK PR takes 5+ years and recent rules have become stricter'); }
+
+  if (a.field === 'tech') { uk_score += 12; uk_pros.push('Tech: UK has strong fintech and startup ecosystem especially in London'); }
+  else if (a.field === 'business') { uk_score += 15; uk_pros.push('Business/MBA: UK qualifications are highly valued globally'); }
+  else if (a.field === 'health') { uk_score += 10; uk_pros.push('Healthcare: NHS has active recruitment from India — clear pathway'); }
+
+  if (a.intake === 'sep26') { uk_warns.push('September 2026: UK UCAS/university deadlines mostly passed — apply immediately or target Jan 2027'); }
+  else if (a.intake === 'jan27') { uk_pros.push('January 2027: Good timeline for UK applications opening in Sept 2026'); }
+
+  uk_actions.push('UK 2026 financial proof: £1,171/month outside London (£10,539 for 9 months) or £1,529/month in London (£13,761 for 9 months) — PLUS full unpaid tuition fees. Funds must be held 28 consecutive days before application.');
+  uk_actions.push('Apply via UCAS for undergraduate, directly to universities for postgraduate');
+
+  countries.push({ country: 'United Kingdom', flag: '🇬🇧', score: uk_score, pros: uk_pros, issues: uk_issues, warns: uk_warns, actions: uk_actions, cost: '₹35–50L', tuition: '₹15–25L/yr', approval: 'Moderate', pr: '5+ years' });
+
+  // ===== AUSTRALIA =====
+  let au_score = 0;
+  let au_issues = [], au_pros = [], au_actions = [], au_warns = [];
+
+  if (['vlow','low'].includes(a.budget)) { au_score -= 10; au_issues.push('Budget below ₹25L is too low for Australia — minimum realistic is ₹35L+'); }
+  else if (a.budget === 'mid') { au_score += 10; au_warns.push('₹25–40L is on the lower end for Australia — part-time work essential'); }
+  else if (['high','vhigh'].includes(a.budget)) { au_score += 22; au_pros.push('Budget comfortably covers Australia costs'); }
+
+  if (['high','top'].includes(a.marks)) { au_score += 20; au_pros.push('Strong marks give access to Group of 8 Australian universities'); }
+  else if (a.marks === 'mid') { au_score += 15; au_pros.push('55–65% marks: many reputable Australian universities are accessible'); }
+  else { au_score += 5; au_warns.push('Below 55%: some pathway programs available before direct degree entry'); }
+
+  if (['great','excel'].includes(a.ielts)) { au_score += 20; au_pros.push('IELTS score is strong for Australia'); }
+  else if (a.ielts === 'good') { au_score += 15; au_pros.push('IELTS 6.0–6.5 meets most Australian university requirements'); }
+  else if (a.ielts === 'ok') { au_score += 8; au_warns.push('5.5 IELTS meets visa minimum but limits university choices'); }
+  else if (a.ielts === 'none') { au_score += 8; au_warns.push('No IELTS yet: Australia requires minimum 5.5 overall — start preparation'); }
+  else { au_score -= 5; au_issues.push('Below 5.5 IELTS does not meet Australian student visa requirements'); }
+
+  if (a.goal === 'settle') { au_score += 20; au_pros.push('PR goal: Australia has one of the clearest post-study PR pathways — 2–4 years after graduation'); }
+  else if (a.goal === 'work_return') { au_score += 15; au_pros.push('Post-study work: Australia offers 2–4 year Graduate visa for work rights'); }
+
+  if (a.field === 'tech') { au_score += 15; au_pros.push('Tech: Australia has critical skills shortage — tech graduates get priority points for PR'); }
+  else if (a.field === 'health') { au_score += 18; au_pros.push('Healthcare: Nursing and healthcare are on Australia\'s critical shortage list — excellent pathway'); }
+  else if (a.field === 'hospitality') { au_score += 12; au_pros.push('Hospitality: Australia has strong tourism industry with good work rights during study'); }
+
+  if (a.intake === 'sep26') { au_warns.push('September 2026: Australian applications have mostly closed — February 2027 or July 2026 (if very fast) are next options'); au_score -= 5; }
+  else if (a.intake === 'jan27') { au_pros.push('February 2027 intake: Applications open now — good timeline'); au_score += 8; }
+
+  au_actions.push('Australia requires Genuine Student requirement test — prepare honest study reason statement');
+  au_actions.push('Australia requires AUD 29,710/year (≈₹17.5L) for living costs — official 2026 Dept. of Home Affairs requirement. Plus first year tuition + AUD 1,600 visa application fee.');
+  au_issues.push('🚨 India classified as Evidence Level 3 (highest risk) from January 8, 2026 — Australia now demands detailed, traceable financial documentation. Sudden deposits will be rejected. Funds must show 3+ months history.');
+
+  countries.push({ country: 'Australia', flag: '🇦🇺', score: au_score, pros: au_pros, issues: au_issues, warns: au_warns, actions: au_actions, cost: '₹35–55L', tuition: '₹12–22L/yr', approval: 'Good', pr: '2–4 years' });
+
+  // ===== USA =====
+  let us_score = 0;
+  let us_issues = [], us_pros = [], us_actions = [], us_warns = [];
+
+  if (a.budget === 'vhigh') { us_score += 30; us_pros.push('Budget covers USA costs — total ₹60–90L for most programs'); }
+  else if (a.budget === 'high') { us_score += 15; us_warns.push('₹40–60L is tight for USA — education loan of ₹20–30L likely needed'); }
+  else if (a.budget === 'mid') { us_score += 5; us_warns.push('USA needs minimum ₹60L+ — education loan will be required'); }
+  else { us_score -= 20; us_issues.push('USA minimum realistic budget is ₹60L+ — much higher than other destinations'); }
+
+  // Education level
+  if (a.education === '12th') { us_score -= 20; us_issues.push('12th pass: US universities do not accept 12th pass for Masters. A full undergraduate degree is required first.'); }
+  else if (a.education === 'pg') { us_score += 10; us_pros.push('Postgraduate: US PhD programs are often fully funded with stipend — especially in STEM fields.'); }
+  else { us_score += 5; }
+
+  // Scholarship
+  if (a.budget === 'scholarship') { us_score += 30; us_pros.push('Scholarship: Many top US universities give merit-based aid to international students — some cover 50-100% of tuition. Fulbright scholarship is fully funded.'); }
+
+  // Law
+  if (a.field === 'law') { us_score += 15; us_pros.push('Law: US LLM (1 year) from a top school has global value. Harvard, Yale, Columbia — the most recognised law degrees in the world.'); }
+
+  if (a.marks === 'top') { us_score += 25; us_pros.push('Strong marks — competitive for good US universities'); }
+  else if (a.marks === 'high') { us_score += 18; us_warns.push('65–75% marks: mid-tier US universities accessible, not top-20'); }
+  else if (a.marks === 'mid') { us_score += 8; us_warns.push('55–65% marks: limits options to lower-tier US colleges'); }
+  else { us_score -= 10; us_issues.push('Below 55% significantly limits US university options'); }
+
+  if (['great','excel'].includes(a.ielts)) { us_score += 20; us_pros.push('IELTS 6.5+ meets most US university English requirements'); }
+  else if (a.ielts === 'good') { us_score += 12; us_warns.push('IELTS 6.0–6.5: meets minimum for many US universities but not top schools'); }
+  else { us_score += 5; us_warns.push('IELTS below 6.0: most US universities need 6.5+ — improvement required'); }
+
+  if (a.field === 'tech') { us_score += 20; us_pros.push('Tech/CS: USA has the best tech job market globally — STEM OPT gives 3 years work'); }
+  else if (a.field === 'business') { us_score += 15; us_pros.push('MBA/Business: US MBA is globally the most valued degree — top ROI if from ranked school'); }
+  else if (a.field === 'science') { us_score += 15; us_pros.push('Research/Sciences: USA has world best funded research — PhD often fully funded'); }
+  else if (a.field === 'health') { us_score += 5; us_warns.push('Healthcare: US medical licensing (USMLE) is extremely hard for international students'); }
+  else { us_score += 8; }
+
+  if (a.goal === 'settle') { us_score += 5; us_warns.push('PR goal: Green Card wait for Indians is 50–100+ years — not realistic'); }
+  else if (a.goal === 'work_return') { us_score += 15; us_pros.push('Work then return: OPT allows 1–3 years work after graduation'); }
+  else if (a.goal === 'just_degree') { us_score += 10; us_pros.push('Degree value: US degree has the strongest global brand recognition'); }
+
+  us_issues.push('🚨 2026: New $250 visa fee, mandatory F-1 interview, 5 years social media history required');
+  us_warns.push('GRE/GMAT required for most Masters programs — add 3–6 months prep time');
+  us_actions.push('F-1 visa requires proof of funds for full course + living — minimum $40,000–60,000 in bank');
+  us_actions.push('Apply for merit scholarships — many US universities give aid to international students');
+  us_actions.push('Book F-1 visa interview early — slots are limited in India');
+
+  countries.push({ country: 'USA', flag: '🇺🇸', score: us_score, pros: us_pros, issues: us_issues, warns: us_warns, actions: us_actions, cost: '₹60–90L', tuition: '₹20–45L/yr', approval: 'Moderate', pr: 'Very Hard' });
+
+  // ===== NEW ZEALAND =====
+  let nz_score = 0;
+  let nz_issues = [], nz_pros = [], nz_actions = [], nz_warns = [];
+
+  if (['vlow','low'].includes(a.budget)) { nz_score += 5; nz_issues.push('Budget below ₹25L is too low for New Zealand — minimum realistic is ₹30L+'); }
+  else if (a.budget === 'mid') { nz_score += 22; nz_pros.push('Budget fits New Zealand well — excellent value vs UK or Australia'); }
+  else if (['high','vhigh'].includes(a.budget)) { nz_score += 25; nz_pros.push('Budget comfortably covers New Zealand costs'); }
+
+  // Education level
+  if (a.education === '12th') { nz_score -= 8; nz_warns.push('12th pass: Foundation programs available at most NZ universities before degree entry.'); }
+  else if (a.education === 'pg') { nz_score += 10; nz_pros.push('Postgraduate: NZ has strong research programs, particularly in agriculture, marine science and IT.'); }
+  else { nz_score += 5; }
+
+  // Scholarship
+  if (a.budget === 'scholarship') { nz_score += 18; nz_pros.push('Scholarship: New Zealand government scholarships available for Indian students — covers tuition and living costs.'); }
+
+  // Law
+  if (a.field === 'law') { nz_score += 6; nz_warns.push('Law: NZ law is common law based but a smaller legal market. LLM possible but limited career opportunities vs UK or Australia.'); }
+
+  if (['high','top'].includes(a.marks)) { nz_score += 22; nz_pros.push('Strong marks — competitive for University of Auckland and Victoria University'); }
+  else if (a.marks === 'mid') { nz_score += 18; nz_pros.push('55–65% marks: well accepted at most New Zealand universities'); }
+  else { nz_score += 8; nz_warns.push('Below 55%: pathway programs available before direct entry'); }
+
+  if (['great','excel'].includes(a.ielts)) { nz_score += 20; nz_pros.push('IELTS score comfortably meets NZ requirements'); }
+  else if (a.ielts === 'good') { nz_score += 16; nz_pros.push('IELTS 6.0–6.5 meets most NZ university entry requirements'); }
+  else if (a.ielts === 'ok') { nz_score += 10; nz_warns.push('IELTS 5.5–6.0: meets minimum for some NZ institutions'); }
+  else if (a.ielts === 'none') { nz_score += 8; nz_warns.push('No IELTS yet: NZ requires minimum 6.0 — start preparation'); }
+  else { nz_score -= 5; nz_issues.push('Below 5.5 IELTS does not meet New Zealand entry requirements'); }
+
+  if (a.field === 'tech') { nz_score += 15; nz_pros.push('Tech: NZ growing tech sector with skills shortage — good job prospects'); }
+  else if (a.field === 'health') { nz_score += 20; nz_pros.push('Healthcare: NZ has critical nursing shortage — one of the best PR pathways globally'); }
+  else if (a.field === 'hospitality') { nz_score += 15; nz_pros.push('Hospitality: NZ tourism is a major industry with strong work opportunities'); }
+  else if (a.field === 'business') { nz_score += 12; nz_pros.push('Business: NZ qualifications well recognised in Asia-Pacific'); }
+  else { nz_score += 8; }
+
+  if (a.goal === 'settle') { nz_score += 20; nz_pros.push('PR goal: NZ Skilled Migrant pathway — typically 3–5 years. One of the clearest routes globally'); }
+  else if (a.goal === 'work_return') { nz_score += 15; nz_pros.push('Post-study: NZ open work visa 1–3 years after graduation'); }
+  else if (a.goal === 'just_degree') { nz_score += 8; }
+
+  nz_pros.push('Work rights: 25 hours/week during study — increased from 20 hours in 2025');
+  nz_warns.push('Smaller job market than Australia — fewer companies, fewer roles');
+  nz_actions.push('Main intake is February/March — applications open August onwards');
+  nz_actions.push('Proof of NZD 20,000/year (≈₹10L) living costs required for student visa');
+  nz_actions.push('University of Auckland (ranked 65 globally) is the top choice for most fields');
+
+  countries.push({ country: 'New Zealand', flag: '🇳🇿', score: nz_score, pros: nz_pros, issues: nz_issues, warns: nz_warns, actions: nz_actions, cost: '₹30–45L', tuition: '₹10–18L/yr', approval: 'Good', pr: '3–5 years' });
+
+  // Sort by score descending — top 4 shown as tabs, rest as "also analysed"
+  countries.sort((a, b) => b.score - a.score);
+
+  return countries;
+}
+
+function getLabel(score, total) {
+  const pct = (score / total) * 100;
+  if (pct >= 65) return { text: '✦ Best Match', cls: 'match-best', cardCls: 'best' };
+  if (pct >= 40) return { text: '◈ Good Match', cls: 'match-good', cardCls: 'good' };
+  return { text: '✗ Not Recommended', cls: 'match-low', cardCls: 'avoid' };
+}
+
+// Stepping stone paths per dream country
+const steppingStones = {
+  'USA': [
+    { country: 'Ireland', flag: '🇮🇪', path: 'Study → Work 2 years on Stamp 1G → Strong profile for USA H1B or Masters application' },
+    { country: 'United Kingdom', flag: '🇬🇧', path: 'UK degree → 2 year Graduate Route visa → Build experience → USA becomes very accessible' }
+  ],
+  'Canada': [
+    { country: 'Germany', flag: '🇩🇪', path: 'Germany degree (low cost) → Build profile → Canada reopens in 2026–27 with stronger application' },
+    { country: 'Ireland', flag: '🇮🇪', path: 'Ireland → Work rights → Canada Express Entry from abroad is easier than direct student route' }
+  ],
+  'United Kingdom': [
+    { country: 'Ireland', flag: '🇮🇪', path: 'Ireland → Lower cost, similar culture → Transfer or apply UK Masters after 1–2 years work' },
+    { country: 'Germany', flag: '🇩🇪', path: 'Germany → Save money → Fund UK Masters yourself without full loan burden' }
+  ],
+  'Australia': [
+    { country: 'New Zealand', flag: '🇳🇿', path: 'NZ → Easier visa, similar lifestyle → Trans-Tasman work rights help Australia PR pathway' },
+    { country: 'Ireland', flag: '🇮🇪', path: 'Ireland → Build English work profile → Australia skilled visa from abroad is stronger' }
+  ],
+  'New Zealand': [
+    { country: 'Australia', flag: '🇦🇺', path: 'Australia → Trans-Tasman agreement → Move to NZ easily after graduation' },
+    { country: 'Ireland', flag: '🇮🇪', path: 'Ireland → Build English work profile → NZ skilled migrant from abroad' }
+  ]
+};
+
+function getSteppingStones(dreamCountry, topCountries) {
+  const stones = steppingStones[dreamCountry];
+  if (!stones) return [];
+  // Only show stepping stones that are actually in their top matches
+  return stones.filter(s => topCountries.some(tc => tc.country === s.country));
+}
+
+function getDreamGapActions(a, country) {
+  const actions = [];
+
+  const ieltsMin = { 'Germany': '6.5', 'Ireland': '6.0', 'United Kingdom': '6.5', 'Australia': '6.0' };
+  const budgetMin = { 'Germany': 'vlow', 'Ireland': 'low', 'United Kingdom': 'high', 'Australia': 'high' };
+  const budgetOrder = ['vlow','low','mid','high','vhigh'];
+
+  // IELTS gap
+  const ieltsReq = ieltsMin[country];
+  const ieltsMap = { 'none': 0, 'low': 4.5, 'ok': 5.5, 'good': 6.0, 'great': 6.5, 'excel': 7.5 };
+  const currentIelts = ieltsMap[a.ielts] || 0;
+  const reqIelts = parseFloat(ieltsReq);
+  if (currentIelts < reqIelts) {
+    actions.push({
+      icon: '📝',
+      area: 'IELTS Score',
+      action: `${country} requires minimum ${ieltsReq} IELTS. Your current score (${a.ielts === 'none' ? 'not given yet' : a.ielts.replace('ok','5.5–6.0').replace('good','6.0–6.5').replace('great','6.5–7.0')}) needs improvement. Focus on Speaking and Writing — these are most improvable with coaching.`,
+      timeline: '2–4 months of focused preparation'
+    });
+  }
+
+  // Budget gap
+  const budgetReqIdx = budgetOrder.indexOf(budgetMin[country]);
+  const currentBudgetIdx = budgetOrder.indexOf(a.budget);
+  if (currentBudgetIdx < budgetReqIdx) {
+    const budgetAdvice = {
+      'United Kingdom': 'UK needs ₹35–50L total. Consider an education loan — most banks offer up to ₹40L for UK universities with no collateral for top institutions.',
+      'Australia': 'Australia needs ₹35–55L total. Education loans available up to ₹40L. Also factor in AUD 29,710 living cost proof required for visa.',
+      'Ireland': 'Ireland needs ₹22–30L total. Part-time work (20 hrs/week allowed) can cover ₹4–6L/year of living costs.',
+      'Germany': 'Germany is actually very affordable — even a lower budget works if you account for the blocked account of €11,904.'
+    };
+    actions.push({
+      icon: '💰',
+      area: 'Budget / Funds',
+      action: budgetAdvice[country] || `Increase your budget to meet ${country}'s requirements.`,
+      timeline: 'Start education loan process 6 months before application'
+    });
+  }
+
+  // Marks gap
+  if (a.marks === 'low') {
+    const marksAdvice = {
+      'Germany': 'Below 55% makes German admission very difficult. Consider a 1-year foundation or pathway program first — several German universities accept this.',
+      'United Kingdom': 'Below 55% limits UK options to lower-tier universities. A pathway/foundation year at a UK college can open better university doors.',
+      'Australia': 'Below 55% may require a pathway program before direct university entry. Many Australian universities offer foundation years.',
+      'Ireland': 'Below 55% limits options significantly. Consider a Level 6/7 course first then transfer to Level 8 degree.'
+    };
+    actions.push({
+      icon: '📚',
+      area: 'Academic Marks',
+      action: marksAdvice[country] || `Your marks need strengthening for ${country}.`,
+      timeline: 'Pathway programs typically take 6–12 months'
+    });
+  }
+
+  // APS for Germany
+  if (country === 'Germany') {
+    actions.push({
+      icon: '📋',
+      area: 'APS Certificate',
+      action: 'Germany requires APS verification for all Indian students — this is mandatory. Apply at the German Embassy in Delhi/Mumbai. Takes 8–12 weeks.',
+      timeline: 'Apply at least 3 months before your target intake'
+    });
+  }
+
+  // Australia Evidence Level 3
+  if (country === 'Australia') {
+    actions.push({
+      icon: '🏦',
+      area: 'Financial Documents',
+      action: 'India is at Evidence Level 3 for Australia since Jan 2026 — the highest scrutiny level. Your funds must show 3+ months consistent history. No sudden deposits. Start building your bank balance now.',
+      timeline: 'Begin 6 months before visa application'
+    });
+  }
+
+  // If no specific gaps found
+  if (actions.length === 0) {
+    actions.push({
+      icon: '✅',
+      area: 'Your Profile',
+      action: `Your profile is close to ${country}'s requirements. The main factor is your overall score vs other countries. Focus on strengthening your IELTS and gathering strong financial documents.`,
+      timeline: '3–6 months preparation recommended'
+    });
+  }
+
+  return actions;
+}
+
+function renderResults(countries) {
+  const a = answers;
+  const maxScore = Math.max(...countries.map(c => c.score));
+
+  const profileLabels = {
+    education: { '12th': '12th Pass', 'grad_final': 'Final Year Grad', 'grad_done': 'Graduate', 'pg': 'Post Graduate' },
+    marks: { 'low': 'Below 55%', 'mid': '55–65%', 'high': '65–75%', 'top': 'Above 75%' },
+    ielts: { 'none': 'Not given yet', 'low': 'Below 5.5', 'ok': '5.5–6.0', 'good': '6.0–6.5', 'great': '6.5–7.0', 'excel': 'Above 7.0' },
+    budget: { 'vlow': 'Below ₹15L', 'low': '₹15–25L', 'mid': '₹25–40L', 'high': '₹40–60L', 'vhigh': 'Above ₹60L', 'scholarship': 'Scholarship' },
+    field: { 'tech': 'Engg / IT', 'business': 'Business/MBA', 'health': 'Healthcare', 'arts': 'Arts/Humanities', 'science': 'Sciences', 'hospitality': 'Hospitality', 'law': 'Law / Legal' },
+    goal: { 'work_return': 'Work then Return', 'settle': 'Settle Permanently', 'just_degree': 'Degree Only', 'unsure': 'Not sure yet' },
+    intake: { 'asap': 'ASAP', 'sep26': 'Sept 2026', 'jan27': 'Jan 2027', 'sep27': 'Sept 2027+' },
+    dream: { 'none': 'No preference', 'germany': '🇩🇪 Germany', 'ireland': '🇮🇪 Ireland', 'uk': '🇬🇧 UK', 'australia': '🇦🇺 Australia', 'usa': '🇺🇸 USA', 'newzealand': '🇳🇿 New Zealand', 'canada': '🇨🇦 Canada', 'other': 'Other country' }
+  };
+
+  const topCountries = countries.slice(0, 4);
+  const otherCountries = countries.slice(4);
+  const top = topCountries[0];
+  const topPct = 100;
+  const scoreColors = ['#0D6E6E','#E07B39','#D4A017','#78716C'];
+
+  // ── DREAM GAP ANALYSIS ──
+  const dreamMap = { germany: 'Germany', ireland: 'Ireland', uk: 'United Kingdom', australia: 'Australia', usa: 'USA', newzealand: 'New Zealand' };
+  const dreamCountry = dreamMap[a.dream];
+  let dreamHtml = '';
+  if (dreamCountry) {
+    const dreamResult = countries.find(c => c.country === dreamCountry);
+    const isDreamTop = top.country === dreamCountry;
+    if (isDreamTop) {
+      dreamHtml = `<div class="dream-banner dream-match">
+        <span class="dream-icon">🎯</span>
+        <div><div class="dream-title">Dream matches your profile!</div>
+        <div class="dream-sub">${dreamCountry} is your top match — you are already on the right path.</div></div>
+      </div>`;
+    } else if (dreamResult) {
+      const gapActions = getDreamGapActions(a, dreamCountry);
+      const stones = getSteppingStones(dreamCountry, countries);
+      dreamHtml = `<div class="dream-banner dream-gap">
+        <span class="dream-icon">🎯</span>
+        <div style="flex:1">
+          <div class="dream-title">Your dream is ${dreamCountry} — you will get there</div>
+          <div class="dream-sub">Based on your profile today, here are two paths that lead directly to ${dreamCountry}.</div>
+          ${stones.length > 0 ? `
+          <div class="stepping-stones">
+            <div class="ss-label">🪜 Smart stepping stone paths to ${dreamCountry}:</div>
+            ${stones.map((s,i) => `
+              <div class="ss-item">
+                <div class="ss-num">${i+1}</div>
+                <div class="ss-content">
+                  <div class="ss-country">${s.flag} ${s.country} → ${dreamCountry}</div>
+                  <div class="ss-path">${s.path}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>` : ''}
+          <button class="dream-toggle" onclick="toggleDreamGap(this)">See what to improve for direct entry ↓</button>
+          <div class="dream-gap-details" style="display:none">
+            ${gapActions.map(g => `<div class="gap-item"><span class="gap-icon">${g.icon}</span><div><div class="gap-area">${g.area}</div><div class="gap-action">${g.action}</div>${g.timeline ? `<div class="gap-timeline">⏱ ${g.timeline}</div>` : ''}</div></div>`).join('')}
+            <div class="gap-timeline" style="margin-top:8px;font-size:12px">💡 Direct entry timeline: 6–12 months of focused preparation</div>
+          </div>
+        </div>
+      </div>`;
+    } else if (a.dream === 'canada') {
+      dreamHtml = `<div class="dream-banner dream-warn">
+        <span class="dream-icon">🇨🇦</span>
+        <div><div class="dream-title">Canada — What you need to know right now</div>
+        <div class="dream-sub">Canada is going through a transition period — permits have reduced and processing is slower. Your dream is valid — but timing matters. See your top matches below as strong alternatives while Canada stabilises.</div></div>
+      </div>`;
+    }
+  }
+
+  // ── INTAKE WARNING ──
+  let intakeWarn = '';
+  if (a.intake === 'asap') {
+    intakeWarn = `<div class="intake-warn">⚡ <strong>Within 6 months:</strong> This is a tight timeline. September 2026 applications are closing for most countries. January 2027 is the most realistic target for a strong application. Use this time to prepare — IELTS, documents, shortlist universities.</div>`;
+  } else if (a.intake === 'sep26') {
+    intakeWarn = `<div class="intake-warn">⚠️ <strong>September 2026:</strong> Applications are closing or already closed for most universities. January 2027 is now the most achievable target. Start preparing now.</div>`;
+  } else if (a.intake === 'sep27') {
+    intakeWarn = `<div class="intake-warn">✅ <strong>September 2027 or later:</strong> Excellent timeline. You have 12+ months to prepare — strengthen IELTS, improve marks, build your application carefully. This is the ideal position to be in.</div>`;
+  }
+
+  // ── BUILD TABS HTML ──
+  const tabsHtml = `
+    <div class="tab-bar">
+      ${topCountries.map((ct, i) => {
+        const pct = Math.round(Math.max(ct.score,0)/maxScore*100);
+        return `<button class="tab-btn ${i===0?'active':''}" onclick="switchTab(${i})" data-idx="${i}">
+          <span class="tab-flag">${ct.flag}</span>
+          <span class="tab-name">${ct.country.replace('United Kingdom','UK').replace('New Zealand','NZ')}</span>
+          <span class="tab-pct" style="background:${scoreColors[i]}20;color:${scoreColors[i]}">${pct}%</span>
+        </button>`;
+      }).join('')}
+    </div>
+
+    ${topCountries.map((ct, i) => {
+      const lbl = getLabel(ct.score, maxScore);
+      const pct = Math.round(Math.max(ct.score,0)/maxScore*100);
+      const cu = cultureData[ct.country];
+      return `
+      <div class="tab-panel ${i===0?'active':''}" id="tab-panel-${i}">
+
+        <!-- Country Hero -->
+        <div class="country-hero" style="border-color:${scoreColors[i]}40;background:linear-gradient(135deg,${scoreColors[i]}08,white)">
+          <div class="hero-top">
+            <div class="hero-left">
+              <span class="hero-flag">${ct.flag}</span>
+              <div>
+                <div class="hero-rank">${i===0?'🏆 Top Match':i===1?'#2 Good Match':i===2?'#3 Consider':'#4 Also Consider'}</div>
+                <div class="hero-name">${ct.country}</div>
+              </div>
+            </div>
+            <div class="hero-score" style="background:${scoreColors[i]}15;border-color:${scoreColors[i]}40">
+              <div class="hero-score-num" style="color:${scoreColors[i]}">${pct}%</div>
+              <div class="hero-score-label">Match</div>
+            </div>
+          </div>
+
+          <!-- Quick stats -->
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="hs-val">${ct.cost}</div><div class="hs-key">Total Cost</div></div>
+            <div class="hero-stat"><div class="hs-val">${ct.tuition}</div><div class="hs-key">Tuition/yr</div></div>
+            <div class="hero-stat"><div class="hs-val">${ct.pr}</div><div class="hs-key">PR Path</div></div>
+          </div>
+
+          <!-- Match bar -->
+          <div class="match-bar-wrap">
+            <div class="match-bar-fill" style="width:${pct}%;background:${scoreColors[i]}"></div>
+          </div>
+        </div>
+
+        <!-- Points: pros / warns / issues -->
+        <div class="points-section">
+          ${ct.pros.map(p => `<div class="point point-good"><span>✓</span><span>${p}</span></div>`).join('')}
+          ${ct.warns.map(w => `<div class="point point-warn"><span>⚠</span><span>${w}</span></div>`).join('')}
+          ${ct.issues.map(iss => `<div class="point point-bad"><span>!</span><span>${iss}</span></div>`).join('')}
+        </div>
+
+        <!-- Next Steps — collapsible -->
+        ${ct.actions.length > 0 ? `
+        <div class="collapsible">
+          <button class="collapsible-btn" onclick="toggleSection(this)">
+            <span>⚡ Your Next Steps (${ct.actions.length})</span><span class="chevron">↓</span>
+          </button>
+          <div class="collapsible-body" style="display:none">
+            ${ct.actions.map(ac => `<div class="action-item">→ ${ac}</div>`).join('')}
+          </div>
+        </div>` : ''}
+
+        <!-- Culture Guide — collapsible -->
+        ${cu ? `
+        <div class="collapsible">
+          <button class="collapsible-btn" onclick="toggleSection(this)">
+            <span>🌐 Life & Culture in ${ct.country}</span><span class="chevron">↓</span>
+          </button>
+          <div class="collapsible-body" style="display:none">
+            <div class="culture-grid-new">
+              <div class="cg-item"><div class="cg-label">Language</div><div class="cg-val">${cu.lang}</div></div>
+              <div class="cg-item"><div class="cg-label">Greeting</div><div class="cg-val">${cu.greeting}</div></div>
+              <div class="cg-item"><div class="cg-label">Currency</div><div class="cg-val">${cu.currency}</div></div>
+              <div class="cg-item"><div class="cg-label">Weather</div><div class="cg-val">${cu.weather}</div></div>
+            </div>
+            <div class="cg-item-full"><div class="cg-label">Punjabi Community</div><div class="cg-val">${cu.community}</div></div>
+            <div class="cg-item-full"><div class="cg-label">Indian Food</div><div class="cg-val">${cu.food}</div></div>
+            <div class="cg-item-full"><div class="cg-label">Work Culture</div><div class="cg-val">${cu.work_culture}</div></div>
+            <div class="punjabi-tip">🟠 ਪੰਜਾਬੀ ਟਿਪ: ${cu.punjabi_tip}</div>
+          </div>
+        </div>` : ''}
+
+      </div>`;
+    }).join('')}
+  `;
+
+  // ── ALSO ANALYSED ──
+  let alsoHtml = '';
+  if (otherCountries.length > 0) {
+    alsoHtml = `<div class="also-section">
+      <div class="also-title">Also Analysed</div>
+      ${otherCountries.map((oc,i) => {
+        const pct = Math.round(Math.max(oc.score,0)/maxScore*100);
+        return `<div class="also-item">
+          <span class="also-flag">${oc.flag}</span>
+          <div class="also-info"><div class="also-name">${oc.country}</div><div class="also-cost">${oc.cost} · PR: ${oc.pr}</div></div>
+          <div class="also-pct">${pct}%</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // ── SOFT CAPTURE ──
+  let softHtml = '';
+  if (!capturedLead) {
+    softHtml = `<div class="soft-capture">
+      <h4>📩 Want personalised next steps for ${top.country}?</h4>
+      <p>We will send you a personalised action plan on WhatsApp — what to do next, step by step.</p>
+      <div class="soft-capture-fields">
+        <div class="soft-field"><span>👤</span><input type="text" id="softName" placeholder="Your name"/></div>
+        <div class="soft-field"><span>📱</span><input type="tel" id="softPhone" placeholder="WhatsApp number" maxlength="10"/></div>
+      </div>
+      <button class="btn-soft-capture" id="btnSoftCapture" onclick="submitSoftCapture()">📲 Send Me the Free Checklist</button>
+      <p style="font-size:11px;color:var(--ink3);margin-top:8px">🔒 Private. No spam. Unsubscribe anytime.</p>
+    </div>`;
+  }
+
+  // ── PROFILE PILL SUMMARY ──
+  const profileHtml = `<div class="profile-pills">
+    <div class="pp-item"><span class="pp-l">Marks</span><span class="pp-v">${profileLabels.marks[a.marks]||'—'}</span></div>
+    <div class="pp-item"><span class="pp-l">IELTS</span><span class="pp-v">${profileLabels.ielts[a.ielts]||'—'}</span></div>
+    <div class="pp-item"><span class="pp-l">Budget</span><span class="pp-v">${profileLabels.budget[a.budget]||'—'}</span></div>
+    <div class="pp-item"><span class="pp-l">Field</span><span class="pp-v">${profileLabels.field[a.field]||'—'}</span></div>
+    <div class="pp-item"><span class="pp-l">Goal</span><span class="pp-v">${profileLabels.goal[a.goal]||'—'}</span></div>
+  </div>`;
+
+  const html = `
+    <div class="result-header">
+      <div class="belong-logo-sm"><span class="belong-b-sm">B</span><span class="belong-elong-sm">elong</span><span class="belong-dot-sm">.</span></div>
+      <h2>Your Study Abroad Match</h2>
+      <p>Unbiased · No agent · Verified 2026 data</p>
+    </div>
+
+    ${profileHtml}
+    ${intakeWarn}
+    ${dreamHtml}
+    ${drawScorecard(countries, maxScore)}
+    ${tabsHtml}
+    ${alsoHtml}
+    ${softHtml}
+
+    <div class="share-section">
+      <h3 class="share-headline">Know someone planning to study abroad? 🌏</h3>
+      <p>Share Belong with them — it takes 2 minutes and could change their path.</p>
+      <div class="share-buttons">
+        <button class="share-btn share-wa" onclick="shareWA()">📱 WhatsApp</button>
+        <button class="share-btn share-tg" onclick="shareTG()">✈️ Telegram</button>
+        <button class="share-btn share-restart" onclick="restart()">↺ Retake</button>
+      </div>
+    </div>
+
+    <!-- FEEDBACK WIDGET -->
+  <div class="feedback-widget" id="feedbackWidget">
+    <div class="feedback-title">💬 Help us get better</div>
+    <div class="feedback-sub">Was this information helpful to you?</div>
+    <div class="feedback-ratings" id="feedbackRatings">
+      <button class="feedback-btn" onclick="selectFeedback(this, '🔥 Very helpful')">🔥 Very helpful</button>
+      <button class="feedback-btn" onclick="selectFeedback(this, '👍 Somewhat helpful')">👍 Somewhat helpful</button>
+      <button class="feedback-btn" onclick="selectFeedback(this, '🤔 Needs improvement')">🤔 Needs improvement</button>
+    </div>
+    <div id="feedbackComment" style="display:none;margin-top:12px;">
+      <div class="soft-field" style="margin-bottom:10px;">
+        <span>💬</span>
+        <input type="text" id="feedbackText" placeholder="Tell us what we can do better (optional)" style="flex:1;background:none;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);"/>
+      </div>
+      <button class="btn-soft-capture" onclick="submitFeedback()" style="width:100%">Send Feedback →</button>
+    </div>
+    <div id="feedbackThanks" style="display:none;text-align:center;padding:16px;font-family:'Fraunces',serif;font-size:16px;color:var(--teal);font-style:italic;">
+      Thank you 🙏 Your feedback helps us improve for every student after you.
+    </div>
+  </div>
+
+  <div class="belong-footer-line">
+    Whichever path you choose, we are rooting for you.<br>
+    Go study, grow, and build the life you and your family have always dreamed of. 🌏<br>
+    <span class="belong-footer-brand">— Belong</span>
+  </div>
+  <div class="disclaimer">
+      <p><strong>ℹ️ Important:</strong> Visa rules, costs and requirements change frequently. All figures shown are approximate and for guidance only — always verify with official embassy and university websites before making any decision. Belong provides guidance, not legal or immigration advice. Part-time work earnings, scholarships and education loans can significantly change your actual costs.</p>
+      <p style="margin-top:8px;font-size:11px;color:var(--ink3)">Cost data sourced from: DAAD.de · irishimmigration.ie · UKCISA.org.uk · homeaffairs.gov.au · ENZ.govt.nz · collegeboard.org — Last reviewed March 2026.</p>
+    </div>
+  `;
+
+  document.getElementById('resultsSection').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+}
+
+function toggleSection(btn) {
+  const body = btn.nextElementSibling;
+  const chevron = btn.querySelector('.chevron');
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  chevron.textContent = open ? '↓' : '↑';
+  btn.classList.toggle('open', !open);
+}
+
+function toggleDreamGap(btn) {
+  const details = btn.nextElementSibling;
+  const open = details.style.display !== 'none';
+  details.style.display = open ? 'none' : 'block';
+  btn.textContent = open ? 'See what to improve ↓' : 'Hide ↑';
+}
+
+
+function selectFeedback(btn, rating) {
+  // Highlight selected
+  document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  btn.setAttribute('data-rating', rating);
+  // Show comment box
+  document.getElementById('feedbackComment').style.display = 'block';
+  window._feedbackRating = rating;
+}
+
+function submitFeedback() {
+  const rating = window._feedbackRating || 'Not rated';
+  const comment = document.getElementById('feedbackText').value || '';
+  const a = answers;
+  const top = calculatedResults ? calculatedResults[0] : null;
+
+  // Save to sheet
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw6yLYiYpU8z3JkQamCe8ceqUSx4B44H0NVMW_u_NSSApcGa85Y5xQc-_oYnUPjfqctXg/exec';
+  const params = new URLSearchParams({
+    timestamp: new Date().toLocaleString(),
+    type: 'feedback',
+    rating: rating,
+    comment: comment,
+    top_country: top ? top.country : '',
+    name: capturedLead ? capturedLead.name : '',
+    phone: capturedLead ? capturedLead.phone : ''
+  });
+  fetch(SHEET_URL + '?' + params.toString()).catch(() => {});
+
+  // Show thanks
+  document.getElementById('feedbackRatings').style.display = 'none';
+  document.getElementById('feedbackComment').style.display = 'none';
+  document.getElementById('feedbackThanks').style.display = 'block';
+}
+
+function shareWA() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const flag = top ? top.flag : '🌏';
+  const text = `${flag} I just found my study abroad match on *Belong*!
+
+My top country: *${country}*
+
+🎯 Know before you go.
+Your journey, your choice. Best of luck. 🌏
+
+Try it free → belong.in
+— Belong: Know before you go.`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+}
+
+function shareTG() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const text = `🌏 Just found my study abroad match on Belong!
+Top country: ${country}
+Know before you go → belong.in`;
+  window.open('https://t.me/share/url?url=belong.in&text=' + encodeURIComponent(text), '_blank');
+}
+
+function restart() {
+  current = 0;
+  answers = {};
+  capturedLead = null;
+  calculatedResults = null;
+  transitionMsg = null;
+  document.getElementById('resultsSection').classList.remove('show');
+  document.getElementById('resultsSection').innerHTML = '';
+  document.getElementById('captureGate').classList.remove('show');
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('mainHeader').style.display = 'block';
+  document.querySelector('.bg-canvas') && (document.querySelector('.bg-canvas').style.opacity = '1');
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== CULTURE DATA =====
+const cultureData = {
+  Germany: {
+    lang: 'German (Deutsch)',
+    greeting: 'Hallo / Guten Tag',
+    punjabi_tip: 'ਜਰਮਨੀ ਵਿੱਚ ਕਿਹੰਦੇ ਨੇ "Hallo" (ਹਾਲੋ)',
+    food: 'Indian restaurants in every major city — Berlin, Munich, Frankfurt all have Punjabi dhabas',
+    community: '180,000+ Indians in Germany — strong Sikh Gurdwara in Frankfurt, Hamburg & Berlin',
+    weather: 'Cold winters (−5°C), warm summers (25°C) — bring warm clothes from home',
+    work_culture: 'Very punctual culture — if meeting is at 10am, arrive at 9:55. Punctuality is deeply respected.',
+    helpful: 'Germans are private but helpful once approached. Learn 10 basic German words — locals love the effort.',
+    currency: 'Euro (€) — ₹1 = approx €0.011'
+  },
+  Ireland: {
+    lang: 'English (Irish English)',
+    greeting: 'How\'re ya? / Howya!',
+    punjabi_tip: 'ਆਇਰਲੈਂਡ ਵਿੱਚ ਅੰਗਰੇਜ਼ੀ ਬੋਲੀ ਜਾਂਦੀ ਹੈ — ਪਰ ਇੱਥੋਂ ਦੀ ਲਹਿਜ਼ੇ ਨਾਲ ਜਾਣ ਪਹਿਚਾਣ ਕਰੋ',
+    food: 'Indian food widely available in Dublin — Parnell Street known as "Little Asia". Halal options easy to find.',
+    community: '35,000+ Indians in Ireland — active Indian community in Dublin, Cork and Galway',
+    weather: 'Rainy and mild — 5°C to 18°C year round. Always carry a jacket and waterproof coat.',
+    work_culture: 'Very friendly, informal culture — first names used always, even with professors. Very approachable.',
+    helpful: 'Irish people are famously warm and chatty. Easy to make friends quickly as an international student.',
+    currency: 'Euro (€) — ₹1 = approx €0.011'
+  },
+  UK: {
+    lang: 'English (British English)',
+    greeting: 'How do you do? / Alright?',
+    punjabi_tip: 'ਯੂਕੇ ਵਿੱਚ ਵੱਡੀ ਪੰਜਾਬੀ ਕਮਿਊਨਿਟੀ ਹੈ — ਖਾਸ ਕਰਕੇ ਸਾਊਥਾਲ (ਲੰਡਨ) ਵਿੱਚ',
+    food: 'Southall (London) is mini-Punjab — full Punjabi food, shops, culture. Every UK city has Indian grocery stores.',
+    community: '1.8 million Indians in UK — largest Indian diaspora in Europe. Strong Gurdwaras across Birmingham, London, Wolverhampton.',
+    weather: 'Cold and grey — 2°C to 20°C. Rarely sunny. Rain is frequent. Warm clothes essential.',
+    work_culture: 'Professional and formal in offices, relaxed in universities. Respect for queuing — never jump a queue.',
+    helpful: 'Multicultural and diverse — easy to find Indian community. Punjabi culture very well established in UK.',
+    currency: 'British Pound (£) — ₹1 = approx £0.0095'
+  },
+  Australia: {
+    lang: 'English (Australian English)',
+    greeting: 'G\'day mate! / How ya going?',
+    punjabi_tip: 'ਆਸਟ੍ਰੇਲੀਆ ਵਿੱਚ ਬਹੁਤ ਸਾਰੇ ਪੰਜਾਬੀ ਹਨ — ਮੈਲਬੌਰਨ ਅਤੇ ਬ੍ਰਿਸਬੇਨ ਵਿੱਚ ਵੱਡੀ ਕਮਿਊਨਿਟੀ',
+    food: 'Indian food everywhere — Melbourne has excellent Indian food streets. Halal meat widely available.',
+    community: '800,000+ Indians in Australia — one of the fastest growing communities. Active Gurdwaras in Melbourne, Sydney, Brisbane.',
+    weather: 'Opposite seasons to India — Christmas is summer (35°C+). June–August is mild winter (8–15°C).',
+    work_culture: 'Very casual and egalitarian — call everyone by first name. Outdoors and sports culture is big.',
+    helpful: 'Australians are laid-back and welcoming. Large Indian student community makes settling in easier.',
+    currency: 'Australian Dollar (AUD) — ₹1 = approx AUD 0.017'
+  },
+  USA: {
+    lang: 'English (American English)',
+    greeting: 'Hey! / What\'s up? / How are you doing?',
+    punjabi_tip: 'ਅਮਰੀਕਾ ਵਿੱਚ 5 ਲੱਖ ਤੋਂ ਵੱਧ ਪੰਜਾਬੀ ਹਨ — ਕੈਲੀਫੋਰਨੀਆ ਅਤੇ ਨਿਊਯਾਰਕ ਵਿੱਚ ਵੱਡੀ ਕਮਿਊਨਿਟੀ',
+    food: 'Indian food in every major city — Edison NJ is "Little India", Fremont CA has large Punjabi community. Halal easily available.',
+    community: '4.4 million Indians in USA — largest skilled diaspora. Strong Gurdwaras in California, New York, New Jersey, Texas.',
+    weather: 'Varies hugely by state — California mild (15–25°C), New York cold winters (−5°C), Texas hot summers (40°C+).',
+    work_culture: 'Fast-paced, ambitious, networking is everything. First names always. Work hard and results are rewarded.',
+    helpful: 'Diverse and multicultural — Indian community is very established. Culture shock is less than other countries.',
+    currency: 'US Dollar ($) — ₹1 = approx $0.012'
+  },
+  'New Zealand': {
+    lang: 'English (NZ English)',
+    greeting: 'Hey / Kia ora (Maori greeting)',
+    punjabi_tip: 'ਨਿਊਜ਼ੀਲੈਂਡ ਵਿੱਚ ਭਾਰਤੀ ਕਮਿਊਨਿਟੀ ਤੇਜ਼ੀ ਨਾਲ ਵੱਧ ਰਹੀ ਹੈ — ਔਕਲੈਂਡ ਵਿੱਚ ਚੰਗੀ ਕਮਿਊਨਿਟੀ ਹੈ',
+    food: 'Indian restaurants in Auckland and Wellington. Halal meat available. Smaller Indian community than Australia but growing fast.',
+    community: '180,000+ Indians in NZ — fastest growing ethnic community. Gurdwara in Auckland and Wellington.',
+    weather: 'Mild and green — 8°C to 22°C year round. Rainy but never extreme. Beautiful outdoors.',
+    work_culture: 'Relaxed like Australia, very friendly and informal. Work-life balance is excellent — 40 hour weeks respected.',
+    helpful: 'Kiwis are extremely friendly and welcoming. Less crowded than Australia — easier to settle in smaller cities.',
+    currency: 'NZ Dollar (NZD) — ₹1 = approx NZD 0.020'
+  }
+};
+
+function drawPieChart(countries, maxScore) {
+  const colors = ['#0D6E6E', '#E07B39', '#D4A017', '#9B2335'];
+  const total = countries.reduce((s, c) => s + Math.max(c.score, 5), 0);
+  const size = 130;
+  const cx = size / 2, cy = size / 2, r = 50;
+  let startAngle = -Math.PI / 2;
+  let paths = '';
+  const slices = countries.map((c, i) => {
+    const val = Math.max(c.score, 5);
+    const pct = val / total;
+    const angle = pct * 2 * Math.PI;
+    const x1 = cx + r * Math.cos(startAngle);
+    const y1 = cy + r * Math.sin(startAngle);
+    startAngle += angle;
+    const x2 = cx + r * Math.cos(startAngle);
+    const y2 = cy + r * Math.sin(startAngle);
+    const large = angle > Math.PI ? 1 : 0;
+    paths += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${colors[i]}" opacity="0.9"/>`;
+    return { pct: Math.round(pct * 100), color: colors[i] };
+  });
+
+  return `
+    <div class="pie-section">
+      <div class="pie-wrap">
+        <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+          <circle cx="${cx}" cy="${cy}" r="${r+8}" fill="rgba(28,25,23,0.02)"/>
+          ${paths}
+          <circle cx="${cx}" cy="${cy}" r="${r * 0.45}" fill="#FFFFFF"/>
+        </svg>
+        <div class="pie-center-label">
+          <span class="pie-center-flag">${countries[0].flag}</span>
+          <span class="pie-center-text">BEST</span>
+        </div>
+      </div>
+      <div class="pie-legend">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text)">📊 Match Distribution</div>
+        ${countries.map((c, i) => `
+          <div class="pie-legend-item">
+            <div class="pie-dot" style="background:${colors[i]}"></div>
+            <span class="pie-legend-text">${c.flag} ${c.country}</span>
+            <span class="pie-legend-pct">${slices[i].pct}%</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function drawScorecard(countries, maxScore) {
+  const colors = ['#0D6E6E', '#E07B39', '#D4A017', '#9B2335'];
+  return `
+    <div class="scorecard">
+      <div class="scorecard-title">📈 Your Match Scorecard</div>
+      ${countries.map((c, i) => {
+        const pct = Math.round(Math.max(c.score, 0) / maxScore * 100);
+        return `
+          <div class="score-row">
+            <div class="score-flag">${c.flag}</div>
+            <div class="score-country-name">${c.country}</div>
+            <div class="score-bar-wrap">
+              <div class="score-bar-fill" style="width:${pct}%;background:${colors[i]}"></div>
+            </div>
+            <div class="score-pct" style="color:${colors[i]}">${pct}%</div>
+          </div>
+        `;
+      }).join('')}
+      <div style="font-size:11px;color:var(--ink3);margin-top:8px">Score based on your marks, IELTS, budget, field, goal and timeline — verified 2026 data</div>
+    </div>
+  `;
+}
+
+// ===== INIT — must be last, after all data and functions defined =====
+buildDots();
+renderQuestion();
+
+</script>
+</body>
+</html>
