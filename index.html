@@ -2249,17 +2249,20 @@ function saveToSheet(name, phone, city, softCapture = false) {
   // Use URL params method — works without CORS issues
   const params = new URLSearchParams(payload);
   const url = SHEET_URL + '?' + params.toString();
+  let saved = false;
   fetch(url, { method: 'GET', mode: 'no-cors' })
     .then(() => {
-      showToast('✅ Profile saved!');
+      saved = true;
       console.log('Sheet saved OK');
     })
     .catch((err) => {
       console.error('Sheet save failed:', err);
-      // Retry once after 2 seconds
-      setTimeout(() => {
-        fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
-      }, 2000);
+      // Retry ONLY if first attempt failed
+      if (!saved) {
+        setTimeout(() => {
+          fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+        }, 2000);
+      }
     });
 }
 
