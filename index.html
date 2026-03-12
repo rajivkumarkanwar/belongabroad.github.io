@@ -2316,22 +2316,46 @@ function calculateResults() {
   else { de_score += 5; de_issues.push('Below 55% marks makes German university admission very difficult'); }
 
   // IELTS
-  if (['great','excel'].includes(a.ielts)) { de_score += 20; de_pros.push('IELTS score meets German university requirements comfortably'); }
-  else if (a.ielts === 'good') { de_score += 15; de_warns.push('6.0–6.5 IELTS: meets minimum but stronger score improves options'); }
-  else if (a.ielts === 'none') { de_score += 10; de_warns.push('No IELTS yet: Germany requires 6.5 minimum. Start preparation now'); de_actions.push('Book IELTS exam immediately — results take 2–3 weeks'); }
-  else if (a.ielts === 'ok') { de_score += 8; de_warns.push('5.5–6.0 IELTS: below Germany\'s 6.5 minimum for most programs'); }
-  else { de_score -= 10; de_issues.push('IELTS below 5.5 is too low for Germany — improvement required'); }
+  if (['great','excel'].includes(a.ielts)) { de_score += 18; de_pros.push('IELTS score meets German university requirements comfortably'); }
+  else if (a.ielts === 'good') { de_score += 15; de_warns.push('6.0–6.5 IELTS: meets minimum for Germany — stronger score improves options'); }
+  else if (a.ielts === 'ok') {
+    if (['arts','mass_comm','law'].includes(a.field)) {
+      de_score += 5; de_warns.push('Low IELTS: Germany has no-IELTS programs but for ' + (a.field==='arts'?'Arts':'this field') + ' UK or Ireland are far better even with a lower IELTS');
+    } else {
+      de_score += 22; de_pros.push('🟢 Low IELTS advantage: Many German universities accept students without IELTS — German language programs are free and fully valid'); de_actions.push('Consider German-medium programs — no IELTS required and tuition is free');
+    }
+  }
+  else if (a.ielts === 'none') {
+    if (['arts','mass_comm','law'].includes(a.field)) {
+      de_score += 5; de_warns.push('No IELTS: For your field, get IELTS first — UK and Ireland are far stronger destinations than Germany');
+    } else {
+      de_score += 25; de_pros.push('🟢 No IELTS needed: Germany has hundreds of programs that do NOT require IELTS. This is Germany\'s biggest advantage over UK/Ireland/Australia for you'); de_actions.push('Apply to German universities with no-IELTS pathway — list available at daad.de');
+    }
+  }
+  else { de_score += 12; de_warns.push('IELTS below 5.5: Germany\'s no-IELTS programs are your best option — see daad.de for eligible courses'); }
 
   // Field
   if (a.field === 'tech') { de_score += 15; de_pros.push('Engineering/IT: Germany is excellent — Siemens, SAP, BMW all hire graduates. 18-month job seeker visa after degree'); }
-  else if (a.field === 'ai_data') { de_score += 32; de_pros.push('🔥 AI/Data Science: Germany is one of the top 3 global destinations — TU Munich, KIT, TU Berlin are world leaders. Near-free tuition for a ₹1Cr+ career field'); }
-  else if (a.field === 'cyber') { de_score += 22; de_pros.push('Cybersecurity: Germany has Europe\'s highest demand for cyber professionals — BSI (Germany\'s NSA equivalent) actively recruits international graduates'); }
+  else if (a.field === 'ai_data') {
+    if (['vlow','low','mid'].includes(a.budget)) {
+      de_score += 38; de_pros.push('🔥 AI/Data Science at low cost: Germany is unbeatable — TU Munich, KIT, TU Berlin are world leaders at near-zero tuition. This combination (AI + free tuition) is almost impossible elsewhere');
+    } else {
+      de_score += 20; de_pros.push('AI/Data Science: Germany has world-class AI programs at near-zero tuition — but at your budget, USA and UK also become strong options');
+    }
+  }
+  else if (a.field === 'cyber') {
+    if (['high','vhigh'].includes(a.budget)) {
+      de_score += 15; de_pros.push('Cybersecurity: Germany has demand for cyber professionals — but Ireland and UK have stronger ecosystems at higher budgets');
+    } else {
+      de_score += 22; de_pros.push('Cybersecurity: Germany has Europe\'s highest demand for cyber professionals — BSI actively recruits international graduates');
+    }
+  }
   else if (a.field === 'phd_research') { de_score += 35; de_pros.push('🏆 PhD/Research: Germany is the top destination for Indian PhD students — most programs are FULLY FUNDED with €1,400–2,000/month stipend. DAAD scholarships widely available'); }
   else if (a.field === 'science') { de_score += 25; de_pros.push('Pure Sciences: Germany has world-class research — Max Planck, Helmholtz institutes are globally top 5. Many funded research positions'); }
   else if (a.field === 'business') { de_score += 10; de_pros.push('Business: Germany has strong management programs — particularly supply chain, operations and finance'); }
-  else if (a.field === 'mass_comm') { de_score -= 8; de_warns.push('Media/Journalism: Most German media programs are in German language. UK, Australia or USA are far better for international English-medium journalism'); }
+  else if (a.field === 'mass_comm') { de_score -= 18; de_issues.push('Media/Journalism: German media programs are in German — not suitable for Indian students. UK is the clear destination for journalism and media'); }
   else if (a.field === 'health') { de_score += 5; de_warns.push('Healthcare: German nursing license requires additional German language qualification — not the easiest route'); }
-  else if (a.field === 'arts') { de_score += 8; de_warns.push('Arts/Humanities: Germany has strong arts programs but most taught in German — language barrier is real'); }
+  else if (a.field === 'arts') { de_score -= 20; de_issues.push('Arts/Humanities: German arts programs are almost entirely in German — not recommended for Indian students. UK is the clear choice for arts'); }
   else if (a.field === 'law') { de_score -= 5; de_warns.push('Law: German law is civil law — not internationally recognised. UK or Ireland are far better for law careers'); }
   else if (a.field === 'hospitality') { de_score -= 5; de_warns.push('Hospitality: Germany is not a primary destination for hospitality programs — Ireland, NZ or AU are better'); }
   else { de_score += 8; }
@@ -2382,7 +2406,13 @@ function calculateResults() {
   else if (a.ielts === 'none') { ie_score += 8; ie_warns.push('No IELTS yet: Ireland minimum is 6.0 — must appear before applying'); }
   else { ie_score -= 5; ie_issues.push('IELTS below 5.5 does not meet Irish entry requirements'); }
 
-  if (a.field === 'tech') { ie_score += 18; ie_pros.push('IT/Tech: Ireland is the European HQ of Google, Apple, Meta, LinkedIn — 2-year Graduate Stay Back visa'); }
+  if (a.field === 'tech') {
+    if (['high','vhigh'].includes(a.budget)) {
+      ie_score += 28; ie_pros.push('🔥 Tech + High Budget: Ireland is the European HQ of Google, Apple, Meta, LinkedIn — at your budget the top Dublin tech companies are fully accessible. Best tech-to-PR pathway in Europe');
+    } else {
+      ie_score += 18; ie_pros.push('IT/Tech: Ireland is the European HQ of Google, Apple, Meta, LinkedIn — 2-year Graduate Stay Back visa');
+    }
+  }
   else if (a.field === 'ai_data') { ie_score += 25; ie_pros.push('🔥 AI/Data Science: Dublin is Europe\'s AI hub — Google DeepMind, Microsoft AI and Meta AI all operate here. Excellent grad jobs'); }
   else if (a.field === 'cyber') { ie_score += 20; ie_pros.push('Cybersecurity: Ireland is Europe\'s data privacy capital (GDPR enforcement HQ) — massive demand for cyber talent from multinationals'); }
   else if (a.field === 'business') { ie_score += 15; ie_pros.push('Business: Dublin is a top European finance hub — IFSC (International Financial Services Centre) employs thousands'); }
@@ -2441,10 +2471,12 @@ function calculateResults() {
   else if (a.marks === 'mid') { uk_score += 10; uk_warns.push('55–65% marks: limited to mid-tier UK universities, not top institutions'); }
   else { uk_score -= 5; uk_issues.push('Below 55%: significantly limits UK options and increases visa risk'); }
 
-  if (['great','excel'].includes(a.ielts)) { uk_score += 20; uk_pros.push('IELTS meets top UK university requirements'); }
-  else if (a.ielts === 'good') { uk_score += 15; uk_warns.push('6.0–6.5 IELTS: sufficient for mid-tier UK universities, not for top 20'); }
-  else if (['ok','none'].includes(a.ielts)) { uk_score += 5; uk_warns.push('IELTS needs improvement — UK top universities require 6.5–7.0 minimum'); }
-  else { uk_score -= 10; uk_issues.push('IELTS below 5.5: does not meet UK visa requirements'); }
+  if (a.ielts === 'excel') { uk_score += 30; uk_pros.push('🌟 Exceptional IELTS: UK top universities — Oxford, Imperial, UCL — are now fully accessible. Your band opens Chevening and university scholarships'); }
+  else if (a.ielts === 'great') { uk_score += 22; uk_pros.push('Strong IELTS meets UK university requirements comfortably'); }
+  else if (a.ielts === 'good') { uk_score += 12; uk_warns.push('6.0–6.5 IELTS: sufficient for mid-tier UK universities, not for top 20'); }
+  else if (a.ielts === 'ok') { uk_score -= 5; uk_issues.push('5.5–6.0 IELTS: below UK visa requirement of 6.5 for most programs — improve before applying'); }
+  else if (a.ielts === 'none') { uk_score -= 10; uk_issues.push('No IELTS: UK requires minimum 6.5 — cannot apply without it. Germany or Ireland are better options for now'); }
+  else { uk_score -= 15; uk_issues.push('IELTS below 5.5: does not meet UK visa requirements — Germany\'s no-IELTS pathway is a better route'); }
 
   if (a.goal === 'work_return') { uk_score += 15; uk_pros.push('Post-study work: UK Graduate visa allows 2 years unrestricted work (3 for PhD)'); }
   else if (a.goal === 'research') { uk_score += 25; uk_pros.push('Research career: UK Russell Group PhD programs are world-ranked — Chevening, Commonwealth, and university scholarships frequently fully funded'); }
@@ -2455,11 +2487,38 @@ function calculateResults() {
   else if (a.field === 'cyber') { uk_score += 18; uk_pros.push('Cybersecurity: GCHQ-certified programs, UK is global leader in cyber standards. Strong demand from government, banking and defence sectors'); }
   else if (a.field === 'business') { uk_score += 18; uk_pros.push('Business/MBA: UK MBA is globally top ranked — LBS, Manchester, Warwick. 1-year Masters is exceptional value vs 2-year USA'); }
   else if (a.field === 'health') { uk_score += 12; uk_pros.push('Healthcare: NHS actively recruits internationally — Tier 2 Health visa available, NMC registration clear pathway'); }
-  else if (a.field === 'mass_comm') { uk_score += 28; uk_pros.push('🏆 Media/Journalism: UK is THE destination — BBC, Reuters, The Guardian, Sky News all headquartered here. Cardiff, City, Goldsmiths are world leaders in journalism'); }
-  else if (a.field === 'law') { uk_score += 35; uk_pros.push('🏆 Law: UK is the global capital of common law — Oxford, Cambridge, LSE, KCL are world top 5. UK law degree opens doors globally'); }
-  else if (a.field === 'phd_research') { uk_score += 25; uk_pros.push('PhD/Research: UK has world-class research — Russell Group universities, Chevening and Commonwealth scholarships. 3-year PhD is shorter and more efficient than USA'); }
-  else if (a.field === 'science') { uk_score += 15; uk_pros.push('Sciences: UK is home to world-class research — Oxford, Cambridge, Imperial are global top 10 in sciences'); }
-  else if (a.field === 'arts') { uk_score += 20; uk_pros.push('Arts/Humanities: UK is globally the best destination for arts — Oxford, Cambridge, LSE, King\'s College are unmatched'); }
+  else if (a.field === 'mass_comm') {
+    uk_score += 40;
+    // Extra boost: mass_comm is a field where UK advantage is absolute — override IELTS gap
+    if (['ok','low','none'].includes(a.ielts)) {
+      uk_score += 15; uk_pros.push('🏆 Mass Comm/Media: UK is the ONLY choice — BBC, Reuters, The Guardian, Sky News. Even with your current IELTS, UK is the right destination. Improve to 6.5 before applying but start preparing now');
+    } else {
+      uk_pros.push('🏆 Mass Comm/Media: UK is the ONLY choice — BBC, Reuters, The Guardian, Sky News, Channel 4. Cardiff, City London, Goldsmiths are world #1 in journalism');
+    }
+  }
+  else if (a.field === 'law') {
+    uk_score += 35;
+    if (['ok','low','none'].includes(a.ielts)) {
+      uk_score += 15; uk_warns.push('Law + Low IELTS: UK is still the right destination for law — but you MUST improve IELTS to 6.5+ before applying. Start prep now, apply in 6–8 months');
+    } else {
+      uk_pros.push('🏆 Law: UK is the global capital of common law — Oxford, Cambridge, LSE, KCL are world top 5. UK law degree opens doors globally');
+    }
+  }
+  else if (a.field === 'phd_research') {
+    if (a.budget === 'scholarship' || a.goal === 'research') {
+      uk_score += 35; uk_pros.push('🏆 PhD/Research + Scholarship: UK Chevening and Commonwealth Scholarships are fully funded AND globally the most prestigious. 3-year PhD (vs 5 in Germany) — faster into your career');
+    } else {
+      uk_score += 25; uk_pros.push('PhD/Research: UK has world-class research — Russell Group universities, Chevening and Commonwealth scholarships. 3-year PhD is shorter and more efficient than Germany');
+    }
+  }
+  else if (a.field === 'science') {
+    if (a.budget === 'scholarship' && ['excel','great'].includes(a.ielts)) {
+      uk_score += 28; uk_pros.push('🏆 Sciences + Scholarship + Strong IELTS: UK is your best option — Oxford, Cambridge, Imperial are global top 3. Chevening and UKRI scholarships highly competitive at your profile');
+    } else {
+      uk_score += 15; uk_pros.push('Sciences: UK is home to world-class research — Oxford, Cambridge, Imperial are global top 10 in sciences');
+    }
+  }
+  else if (a.field === 'arts') { uk_score += 45; uk_pros.push('🏆 Arts/Humanities: UK is the undisputed world #1 — Oxford, Cambridge, LSE, King\'s College, Goldsmiths. No country comes close for arts. English-medium, globally recognised, world-class creative industry'); }
   else if (a.field === 'hospitality') { uk_score += 8; uk_pros.push('Hospitality: UK has established hospitality programs — London is a global tourism hub'); }
   else { uk_score += 10; }
 
@@ -2491,24 +2550,43 @@ function calculateResults() {
   else if (a.marks === 'mid') { au_score += 15; au_pros.push('55–65% marks: many reputable Australian universities are accessible'); }
   else { au_score += 5; au_warns.push('Below 55%: some pathway programs available before direct degree entry'); }
 
-  if (['great','excel'].includes(a.ielts)) { au_score += 20; au_pros.push('IELTS score is strong for Australia'); }
-  else if (a.ielts === 'good') { au_score += 15; au_pros.push('IELTS 6.0–6.5 meets most Australian university requirements'); }
-  else if (a.ielts === 'ok') { au_score += 8; au_warns.push('5.5 IELTS meets visa minimum but limits university choices'); }
-  else if (a.ielts === 'none') { au_score += 8; au_warns.push('No IELTS yet: Australia requires minimum 5.5 overall — start preparation'); }
-  else { au_score -= 5; au_issues.push('Below 5.5 IELTS does not meet Australian student visa requirements'); }
+  if (a.ielts === 'excel') { au_score += 25; au_pros.push('🌟 Exceptional IELTS: Australia Awards Scholarship is now realistic for you — fully funded and highly competitive'); }
+  else if (a.ielts === 'great') { au_score += 20; au_pros.push('Strong IELTS score meets all Australian university requirements comfortably'); }
+  else if (a.ielts === 'good') { au_score += 13; au_pros.push('IELTS 6.0–6.5 meets most Australian university requirements'); }
+  else if (a.ielts === 'ok') { au_score += 5; au_warns.push('5.5–6.0 IELTS: meets visa minimum but limits university choices — improve to 6.5 for better options'); }
+  else if (a.ielts === 'none') { au_score -= 5; au_warns.push('No IELTS: Australia requires minimum 5.5 — Germany\'s no-IELTS route is better for now'); }
+  else { au_score -= 10; au_issues.push('Below 5.5 IELTS does not meet Australian student visa requirements'); }
 
   if (a.goal === 'research') { au_score += 15; au_pros.push('Research career: Australian RTP scholarships fund PhD — Group of Eight universities rival UK. English-medium advantage'); }
   if (a.goal === 'research') { au_score += 22; au_pros.push('Research career: Australian Research Council funds world-class research — Group of Eight universities recruit Indian PhD students actively'); }
-  else if (a.goal === 'settle') { au_score += 30; au_pros.push('PR goal: Australia has one of the clearest post-study PR pathways — 2–4 years after graduation'); }
+  else if (a.goal === 'settle') {
+    if (['health','cyber','hospitality'].includes(a.field)) {
+      au_score += 38; au_pros.push('🏆 PR goal + your field: Australia is THE best choice — healthcare, cyber and hospitality are all on the critical shortage list for PR. Fastest pathway to Australian PR among all countries');
+    } else {
+      au_score += 30; au_pros.push('PR goal: Australia has one of the clearest post-study PR pathways — 2–4 years after graduation');
+    }
+  }
   else if (a.goal === 'work_return') { au_score += 15; au_pros.push('Post-study work: Australia offers 2–4 year Graduate visa for work rights'); }
 
-  if (a.field === 'tech') { au_score += 15; au_pros.push('Tech: Australia has critical tech skills shortage — graduates get priority for PR via Skilled migration points'); }
+  if (a.field === 'tech') {
+    if (['high','vhigh'].includes(a.budget)) {
+      au_score += 8; au_pros.push('Tech: Australia has tech skills shortage, but Ireland and UK offer stronger tech ecosystems at higher budgets');
+    } else {
+      au_score += 15; au_pros.push('Tech: Australia has critical tech skills shortage — graduates get priority for PR via Skilled migration points');
+    }
+  }
   else if (a.field === 'ai_data') { au_score += 18; au_pros.push('AI/Data Science: Australia has strong AI research at ANU, Melbourne, Sydney — growing industry demand and PR pathway for data professionals'); }
   else if (a.field === 'cyber') { au_score += 20; au_pros.push('Cybersecurity: Australia government is investing heavily in cyber defense — cyber professionals on skilled occupation list for PR'); }
   else if (a.field === 'health') { au_score += 22; au_pros.push('🏆 Healthcare: Nursing and healthcare are on Australia\'s critical shortage list — fastest PR pathway, AHPRA registration clear for Indian nurses'); }
   else if (a.field === 'hospitality') { au_score += 15; au_pros.push('Hospitality: Australia is a top destination — tourism is a major industry, strong work rights during study'); }
   else if (a.field === 'science') { au_score += 12; au_pros.push('Sciences: Group of Eight universities (Melbourne, ANU, Sydney) have strong research programs'); }
-  else if (a.field === 'business') { au_score += 12; au_pros.push('Business: Australian MBAs are strong — Melbourne Business School and UNSW are globally ranked'); }
+  else if (a.field === 'business') {
+    if (a.goal === 'settle') {
+      au_score += 18; au_pros.push('Business + PR goal: Australia is strong — Melbourne Business School, UNSW, and clear PR pathway for business graduates');
+    } else {
+      au_score += 10; au_pros.push('Business: Australian MBAs are solid — Melbourne Business School and UNSW are globally ranked');
+    }
+  }
   else if (a.field === 'mass_comm') { au_score += 16; au_pros.push('Media/Journalism: Australia has strong journalism programs — Melbourne, RMIT, Monash. Strong English-speaking media industry'); }
   else if (a.field === 'phd_research') { au_score += 18; au_pros.push('PhD/Research: Australian RTP (Research Training Program) scholarships fund international PhD students — covers fees + AUD 32,000/year living stipend'); }
   else if (a.field === 'law') { au_score += 10; au_pros.push('Law: Australian common law degree recognised across the Commonwealth — Melbourne and Sydney Law Schools are highly ranked'); }
@@ -2644,9 +2722,25 @@ function calculateResults() {
   if (a.education === '12th') {
     countries.forEach(country => {
       if (['United Kingdom','Australia','USA'].includes(country.country)) {
-        country.score -= 10; // extra penalty — these really need degree
+        country.score -= 10;
       }
     });
+  }
+
+  // vlow budget — Germany should always win, hard cap others
+  if (a.budget === 'vlow') {
+    const minCosts = {'Ireland':22,'United Kingdom':35,'Australia':35,'USA':60,'New Zealand':28};
+    countries.forEach(country => {
+      const minCost = minCosts[country.country];
+      if (minCost) {
+        const penalty = minCost > 30 ? 35 : 20;
+        country.score -= penalty;
+        if (!country.issues.some(i=>i.includes('too low')))
+          country.issues.push('Budget of under ₹15L is well below ' + country.country + '\'s minimum cost of ₹' + minCost + 'L — not recommended');
+      }
+    });
+    const de = countries.find(x=>x.country==='Germany');
+    if (de) de.score += 10;
   }
 
   // If vlow budget: ensure no country with min cost > ₹18L tops the list
@@ -3035,8 +3129,12 @@ function renderResults(countries) {
       <h3 class="share-headline">Know someone planning to study abroad? 🌏</h3>
       <p>Share Belong with them — it takes 2 minutes and could change their path.</p>
       <div class="share-buttons">
-        <button class="share-btn share-wa" onclick="shareWA()">📱 WhatsApp</button>
-        <button class="share-btn share-tg" onclick="shareTG()">✈️ Telegram</button>
+        <button class="share-btn share-wa"   onclick="shareWA()">📱 WhatsApp</button>
+        <button class="share-btn share-tg"   onclick="shareTG()">✈️ Telegram</button>
+        <button class="share-btn share-fb"   onclick="shareFB()">👥 Facebook</button>
+        <button class="share-btn share-li"   onclick="shareLI()">💼 LinkedIn</button>
+        <button class="share-btn share-ig"   onclick="shareIG()">📸 Instagram</button>
+        <button class="share-btn share-copy" onclick="copyLink()">🔗 Copy Link</button>
         <button class="share-btn share-restart" onclick="restart()">↺ Retake</button>
       </div>
     </div>
@@ -3155,8 +3253,12 @@ function detectReferralSource() {
   const params = new URLSearchParams(window.location.search);
   const ref = params.get('ref');
   if (ref) {
-    window._referralSource = ref === 'wa' ? 'WhatsApp Share'
-                           : ref === 'tg' ? 'Telegram Share'
+    window._referralSource = ref === 'wa'   ? 'WhatsApp Share'
+                           : ref === 'tg'   ? 'Telegram Share'
+                           : ref === 'fb'   ? 'Facebook Share'
+                           : ref === 'li'   ? 'LinkedIn Share'
+                           : ref === 'ig'   ? 'Instagram Share'
+                           : ref === 'copy' ? 'Copy Link Share'
                            : ref;
   } else {
     window._referralSource = 'Direct';
@@ -3196,6 +3298,64 @@ ${refUrl}`;
 
   // Log share to Google Sheet
   logShare('Telegram', country);
+}
+
+function shareFB() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const refUrl = 'https://belongabroad.github.io?ref=fb';
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(refUrl), '_blank');
+  logShare('Facebook', country);
+}
+
+function shareLI() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const refUrl = 'https://belongabroad.github.io?ref=li';
+  const title = 'Found my study abroad match — ' + country;
+  const summary = 'Free 2-minute guide for Indian students planning to study abroad. Honest country matching based on your IELTS score, budget and goal.';
+  window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(refUrl) + '&title=' + encodeURIComponent(title) + '&summary=' + encodeURIComponent(summary), '_blank');
+  logShare('LinkedIn', country);
+}
+
+function shareIG() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const refUrl = 'https://belongabroad.github.io?ref=ig';
+  navigator.clipboard.writeText(refUrl).then(() => {
+    showToast('📸 Link copied — paste it in your Instagram bio or story!');
+  }).catch(() => {
+    showToast('📸 Copy this link for Instagram: ' + refUrl);
+  });
+  logShare('Instagram', country);
+}
+
+function copyLink() {
+  const top = calculatedResults ? calculatedResults[0] : null;
+  const country = top ? top.country : 'my top match';
+  const refUrl = 'https://belongabroad.github.io?ref=copy';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(refUrl).then(() => {
+      showToast('🔗 Link copied — share it anywhere!');
+    }).catch(() => {
+      fallbackCopy(refUrl);
+    });
+  } else {
+    fallbackCopy(refUrl);
+  }
+  logShare('Copy Link', country);
+}
+
+function fallbackCopy(text) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.position = 'fixed';
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  showToast('🔗 Link copied — share it anywhere!');
 }
 
 function restart() {
