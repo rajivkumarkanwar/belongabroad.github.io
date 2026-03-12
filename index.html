@@ -2242,7 +2242,7 @@ function saveToSheet(name, phone, city, softCapture = false) {
     intake: a.intake || '',
     english: a.english || '',
     top_country: topCountry,
-    source: softCapture ? 'soft_capture' : 'gate_capture',
+    source: (window._referralSource && window._referralSource !== 'Direct' ? window._referralSource + ' → ' : '') + (softCapture ? 'soft_capture' : 'gate_capture'),
     dream_country: a.dream || '',
     dream_other: answers['dreamOtherText'] || ''
   };
@@ -3131,6 +3131,36 @@ function submitFeedback() {
   document.getElementById('feedbackThanks').style.display = 'block';
 }
 
+// ── SHARE TRACKING ──
+function logShare(platform, country) {
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw6yLYiYpU8z3JkQamCe8ceqUSx4B44H0NVMW_u_NSSApcGa85Y5xQc-_oYnUPjfqctXg/exec';
+  const params = new URLSearchParams({
+    type:        'share',
+    timestamp:   new Date().toLocaleString(),
+    platform:    platform,
+    top_country: country,
+    name:        capturedLead ? capturedLead.name  : '',
+    phone:       capturedLead ? capturedLead.phone : '',
+    city:        capturedLead ? capturedLead.city  : ''
+  });
+  fetch(SHEET_URL + '?' + params.toString()).catch(() => {});
+}
+
+// ── REFERRAL SOURCE DETECTION ──
+// Reads ?ref=wa or ?ref=tg from URL on page load
+function detectReferralSource() {
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get('ref');
+  if (ref) {
+    window._referralSource = ref === 'wa' ? 'WhatsApp Share'
+                           : ref === 'tg' ? 'Telegram Share'
+                           : ref;
+  } else {
+    window._referralSource = 'Direct';
+  }
+}
+detectReferralSource();
+
 function shareWA() {
   const top = calculatedResults ? calculatedResults[0] : null;
   const country = top ? top.country : 'my top match';
@@ -3150,10 +3180,15 @@ Try it free → belong.in
 function shareTG() {
   const top = calculatedResults ? calculatedResults[0] : null;
   const country = top ? top.country : 'my top match';
+  const refUrl = 'https://belongabroad.github.io?ref=tg';
   const text = `🌏 Just found my study abroad match on Belong!
 Top country: ${country}
-Know before you go → belong.in`;
-  window.open('https://t.me/share/url?url=belong.in&text=' + encodeURIComponent(text), '_blank');
+Know before you go — free 2-minute guide for Indian students 👇
+${refUrl}`;
+  window.open('https://t.me/share/url?url=' + encodeURIComponent(refUrl) + '&text=' + encodeURIComponent(text), '_blank');
+
+  // Log share to Google Sheet
+  logShare('Telegram', country);
 }
 
 function restart() {
